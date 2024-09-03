@@ -1,0 +1,11 @@
+name: DisciplineX
+version: '${project.version}'
+main: xyz.michelepip.disciplinex.DisciplineX
+author: 928533G
+api-version: '1.21'
+
+commands:
+  kick:
+    description: Kick a player
+    usage: /kick <player>
+    permissions: []
