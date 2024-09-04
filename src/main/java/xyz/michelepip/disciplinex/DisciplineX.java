@@ -2,6 +2,7 @@ package xyz.michelepip.disciplinex;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import xyz.michelepip.disciplinex.api.db.DatabaseHandler;
 import xyz.michelepip.disciplinex.cmd.moderation.BanCommand;
 import xyz.michelepip.disciplinex.cmd.moderation.KickCommand;
 import xyz.michelepip.disciplinex.cmd.moderation.MuteCommand;
@@ -13,6 +14,7 @@ public final class DisciplineX extends JavaPlugin {
 
     private static @NotNull Logger log;
     private static DisciplineX instance;
+    private DatabaseHandler db;
 
     @Override
     public void onEnable() {
@@ -21,6 +23,8 @@ public final class DisciplineX extends JavaPlugin {
         log = getLogger();
         setInstance(this);
         importClasses();
+        db = new DatabaseHandler();
+        db.setupDatabase();
     }
 
     @Override

@@ -1,0 +1,13 @@
+xyz/michelepip/disciplinex/DisciplineX.class
+xyz/michelepip/disciplinex/api/Punishment.class
+xyz/michelepip/disciplinex/cmd/moderation/MuteCommand.class
+xyz/michelepip/disciplinex/api/PermissionChecks.class
+xyz/michelepip/disciplinex/staticaccess/StaticAccess.class
+xyz/michelepip/disciplinex/api/db/DatabaseHandler.class
+xyz/michelepip/disciplinex/api/PunishmentTypes.class
+xyz/michelepip/disciplinex/api/PunshmentExpirationReasons.class
+xyz/michelepip/disciplinex/exception/IncorrectArgumentException.class
+xyz/michelepip/disciplinex/cmd/moderation/BanCommand.class
+xyz/michelepip/disciplinex/event/AsyncPlayerChatEventHandler.class
+xyz/michelepip/disciplinex/cmd/moderation/WarnCommand.class
+xyz/michelepip/disciplinex/cmd/moderation/KickCommand.class

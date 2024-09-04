@@ -8,4 +8,11 @@ commands:
   kick:
     description: Kick a player
     usage: /kick <player>
-    permissions: []
+    permission: disciplinex.moderation.ban
+  ban:
+    description: Ban a player for an infinite or finite amount of time.
+    permission: disciplinex.moderation.ban
+  mute:
+    permission: disciplinex.moderation.mute
+  warn:
+    permission: disciplinex.moderation.warn
