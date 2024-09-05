@@ -10,6 +10,11 @@ import xyz.michelepip.disciplinex.cmd.moderation.WarnCommand;
 
 import java.util.logging.Logger;
 
+/**
+ * This class is the main class of the plugin.
+ * It is used to initialise the plugin and
+ * to import all the commands.
+ */
 public final class DisciplineX extends JavaPlugin {
 
     private static @NotNull Logger log;
@@ -22,7 +27,7 @@ public final class DisciplineX extends JavaPlugin {
         // Initialise static variables
         log = getLogger();
         setInstance(this);
-        importClasses();
+        importCommands();
         db = new DatabaseHandler();
         db.setupDatabase();
     }
@@ -38,7 +43,7 @@ public final class DisciplineX extends JavaPlugin {
      * is correctly included in the plugin.yml, or else
      * it will not be recognized by the plugin.
      */
-    private void importClasses() {
+    private void importCommands() {
         getCommand("kick").setExecutor(new KickCommand());
         getCommand("ban").setExecutor(new BanCommand());
         getCommand("warn").setExecutor(new WarnCommand());

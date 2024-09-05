@@ -10,10 +10,9 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * This class is used to manage connections
- * to the MySQL Database.
+ * This class is used to handle the database
+ * connection and to perform queries on the database.
  */
-
 public class DatabaseHandler {
 
     /*

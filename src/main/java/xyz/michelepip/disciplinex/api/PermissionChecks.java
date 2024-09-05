@@ -3,6 +3,10 @@ package xyz.michelepip.disciplinex.api;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This class is used to check whether a player has
+ * access to perform a certain command.
+ */
 public class PermissionChecks {
 
     /**
