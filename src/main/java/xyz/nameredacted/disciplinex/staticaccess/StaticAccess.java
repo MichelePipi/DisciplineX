@@ -1,15 +1,16 @@
-package xyz.michelepip.disciplinex.staticaccess;
+package xyz.nameredacted.disciplinex.staticaccess;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import xyz.nameredacted.disciplinex.cmd.moderation.KickCommand;
 
 /**
  * This class is used to statically access various constants
  * used across various classes. It is to only be imported
  * statically. See command classes for correct implementations.
- * @see xyz.michelepip.disciplinex.cmd.moderation.KickCommand
+ * @see KickCommand
  */
 public class StaticAccess {
 

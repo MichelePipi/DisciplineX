@@ -1,8 +1,9 @@
-package xyz.michelepip.disciplinex.exception;
+package xyz.nameredacted.disciplinex.exception;
 
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand;
 
 /**
  * To prevent repetition in the several
@@ -16,7 +17,7 @@ import org.bukkit.entity.Player;
  *     throw new IncorrectArgumentException("Sorry, those are the incorrect arguments.");
  * }
  * } </pre>
- * @see xyz.michelepip.disciplinex.cmd.moderation.MuteCommand
+ * @see MuteCommand
  */
 public class IncorrectArgumentException extends Exception {
 

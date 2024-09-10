@@ -1,9 +1,9 @@
-package xyz.michelepip.disciplinex.api;
+package xyz.nameredacted.disciplinex.api;
 
 /**
  * This enum is used to represent the types of
  * punishments that can be issued to a player.
- * @see xyz.michelepip.disciplinex.api.Punishment
+ * @see Punishment
  */
 public enum PunishmentTypes {
 

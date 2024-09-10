@@ -1,12 +1,12 @@
-package xyz.michelepip.disciplinex;
+package xyz.nameredacted.disciplinex;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import xyz.michelepip.disciplinex.api.db.DatabaseHandler;
-import xyz.michelepip.disciplinex.cmd.moderation.BanCommand;
-import xyz.michelepip.disciplinex.cmd.moderation.KickCommand;
-import xyz.michelepip.disciplinex.cmd.moderation.MuteCommand;
-import xyz.michelepip.disciplinex.cmd.moderation.WarnCommand;
+import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
+import xyz.nameredacted.disciplinex.cmd.moderation.BanCommand;
+import xyz.nameredacted.disciplinex.cmd.moderation.KickCommand;
+import xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand;
+import xyz.nameredacted.disciplinex.cmd.moderation.WarnCommand;
 
 import java.util.logging.Logger;
 

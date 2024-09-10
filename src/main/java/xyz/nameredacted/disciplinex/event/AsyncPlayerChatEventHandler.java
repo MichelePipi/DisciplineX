@@ -1,9 +1,9 @@
-package xyz.michelepip.disciplinex.event;
+package xyz.nameredacted.disciplinex.event;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import xyz.michelepip.disciplinex.api.db.DatabaseHandler;
+import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -12,7 +12,7 @@ import java.util.UUID;
  * This class is used to prevent muted
  * players from sending messages.
  *
- * @see xyz.michelepip.disciplinex.api.db.DatabaseHandler
+ * @see DatabaseHandler
  */
 public class AsyncPlayerChatEventHandler implements Listener {
 

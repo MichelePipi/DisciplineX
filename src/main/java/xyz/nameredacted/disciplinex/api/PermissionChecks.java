@@ -1,4 +1,4 @@
-package xyz.michelepip.disciplinex.api;
+package xyz.nameredacted.disciplinex.api;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

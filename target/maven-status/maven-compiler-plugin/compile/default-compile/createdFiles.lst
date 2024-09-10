@@ -6,7 +6,9 @@ xyz/michelepip/disciplinex/staticaccess/StaticAccess.class
 xyz/michelepip/disciplinex/api/db/DatabaseHandler.class
 xyz/michelepip/disciplinex/api/PunishmentTypes.class
 xyz/michelepip/disciplinex/api/PunshmentExpirationReasons.class
+xyz/michelepip/disciplinex/cmd/other/staffchat/StaffChatEventHandler.class
 xyz/michelepip/disciplinex/exception/IncorrectArgumentException.class
+xyz/michelepip/disciplinex/cmd/other/staffchat/StaffChatCommand.class
 xyz/michelepip/disciplinex/cmd/moderation/BanCommand.class
 xyz/michelepip/disciplinex/event/AsyncPlayerChatEventHandler.class
 xyz/michelepip/disciplinex/cmd/moderation/WarnCommand.class

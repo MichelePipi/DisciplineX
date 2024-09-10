@@ -1,6 +1,6 @@
 name: DisciplineX
 version: '${project.version}'
-main: xyz.michelepip.disciplinex.DisciplineX
+main: xyz.nameredacted.disciplinex.DisciplineX
 author: 928533G
 api-version: '1.21'
 
@@ -8,11 +8,11 @@ commands:
   kick:
     description: Kick a player
     usage: /kick <player>
-    permission: disciplinex.moderation.ban
+#    permission: disciplinex.moderation.ban
   ban:
     description: Ban a player for an infinite or finite amount of time.
-    permission: disciplinex.moderation.ban
+#    permission: disciplinex.moderation.ban
   mute:
-    permission: disciplinex.moderation.mute
+#    permission: disciplinex.moderation.mute
   warn:
-    permission: disciplinex.moderation.warn
+#    permission: disciplinex.moderation.warn

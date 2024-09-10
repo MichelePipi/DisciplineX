@@ -1,9 +1,9 @@
-package xyz.michelepip.disciplinex.api.db;
+package xyz.nameredacted.disciplinex.api.db;
 
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
-import xyz.michelepip.disciplinex.DisciplineX;
+import xyz.nameredacted.disciplinex.DisciplineX;
 
 import java.sql.*;
 import java.util.UUID;
@@ -74,6 +74,7 @@ public class DatabaseHandler {
     }
 
     // Asynchronous ver. (checkmute)
+    @TestOnly
     public static CompletableFuture<ResultSet> asyncIsPlayerMuted(final @NotNull UUID uuid) {
         return CompletableFuture.supplyAsync(() -> {
             Connection conn = createConnection();

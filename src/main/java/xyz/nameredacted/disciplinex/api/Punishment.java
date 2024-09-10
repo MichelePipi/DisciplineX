@@ -1,4 +1,6 @@
-package xyz.michelepip.disciplinex.api;
+package xyz.nameredacted.disciplinex.api;
+
+import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
 
 import java.util.Date;
 import java.util.UUID;
@@ -9,7 +11,7 @@ import java.util.UUID;
  * issued to a player.
  * @see PunishmentTypes
  * @see PunshmentExpirationReasons
- * @see xyz.michelepip.disciplinex.api.db.DatabaseHandler
+ * @see DatabaseHandler
  */
 public class Punishment {
 
