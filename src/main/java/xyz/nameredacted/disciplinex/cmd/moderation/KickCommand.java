@@ -7,9 +7,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import xyz.michelepip.disciplinex.api.PermissionChecks;
 
-import static xyz.michelepip.disciplinex.staticaccess.StaticAccess.COMMAND_FAILED;
-import static xyz.michelepip.disciplinex.staticaccess.StaticAccess.COMMAND_SUCCESS;
+import static xyz.michelepip.disciplinex.staticaccess.StaticAccess.*;
 
 public class KickCommand implements CommandExecutor {
 
@@ -32,6 +32,11 @@ public class KickCommand implements CommandExecutor {
         if (args.length != 1) {
             player.sendMessage("Please enter the command in the form: /kick <playername>");
             return COMMAND_FAILED;
+        }
+
+        if (!PermissionChecks.hasPermission(player, "disciplinex.moderation.kick")) {
+            player.sendMessage(PERMISSION_ERROR);
+            return true;
         }
 
         // Get the player to kick from the argument

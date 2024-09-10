@@ -23,8 +23,8 @@ public class DatabaseHandler {
     private static final String host = "localhost";
     private static final int port = 3306;
     private static final String databaseName = "disciplinex";
-    private static final String username = "disciplinexdb";
-    private static final String password = "example";
+    private static final String username = "disciplinexdbb";
+    private static final String password = "example!";
 
     public static Connection createConnection() {
         try {
