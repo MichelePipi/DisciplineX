@@ -109,6 +109,18 @@ public class DatabaseHandler {
                     "start_date DATETIME NOT NULL," +
                     "expiry_date DATETIME," +
                     "expiry_date_actual DATETIME);");
+            /**
+             * Old query:
+             * "CREATE TABLE IF NOT EXISTS active_punishments (" +
+             *                     "punishment_id INT PRIMARY KEY AUTO_INCREMENT," +
+             *                     "player_id INT FOREIGN KEY (player_id) REFERENCES players(player_id)," +
+             *                     "punisher_id INT FOREIGN KEY (punisher_id) REFERENCES players(player_id)," +
+             *                     "punishment_type ENUM('BAN', 'MUTE', 'KICK', 'WARN') NOT NULL," +
+             *                     "reason TEXT," +
+             *                     "start_date DATETIME NOT NULL," +
+             *                     "expiry_date DATETIME," +
+             *                     "expiry_date_actual DATETIME);");
+             */
             createTable.execute();
         } catch (SQLException e) {
             DisciplineX.severeError("A severe error has encountered while executing a database query. The plugin has been shut down.");
@@ -142,6 +154,14 @@ public class DatabaseHandler {
                     "action ENUM('CREATED', 'EXPIRED', 'LIFTED') NOT NULL," +
                     "timestamp DATETIME NOT NULL);");
             createTable.execute();
+            /**
+             * Old query:
+             * "CREATE TABLE IF NOT EXISTS punishment_history (" +
+             *                     "id INT PRIMARY KEY AUTO_INCREMENT," +
+             *                     "punishment_id INT FOREIGN KEY (punishment_id) REFERENCES active_punishments(punishment_id)," +
+             *                     "action ENUM('CREATED', 'EXPIRED', 'LIFTED') NOT NULL," +
+             *                     "timestamp DATETIME NOT NULL);");
+             */
         } catch (SQLException e) {
             DisciplineX.severeError("A severe error has encountered while creating the players table. The plugin has been shut down.");
             e.printStackTrace();
