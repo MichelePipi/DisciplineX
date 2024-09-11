@@ -1,23 +1,31 @@
 package xyz.nameredacted.disciplinex.cmd.moderation;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import xyz.nameredacted.disciplinex.api.PermissionChecks;
+import xyz.nameredacted.disciplinex.cmd.Command;
 
 import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.*;
 
-public class KickCommand implements CommandExecutor {
+/**
+ * TODO: Iteration 2, convert into implementation of Command rather than CommandExecutor.
+ */
+public class KickCommand extends Command {
 
+    @Over
+
+    @ApiStatus.Obsolete
     private final String PLAYERS_ONLY = "Only players may execute this command.";
+    @ApiStatus.Obsolete
     private final String INCORRECT_USAGE_MSG = "Please enter the command correctly.";
 
 
-    @Override
+    @ApiStatus.Obsolete
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd,
                              @NotNull String s, @NotNull String[] args) {
         // check whether player or console executed the command
@@ -49,6 +57,33 @@ public class KickCommand implements CommandExecutor {
 
         target.kick(Component.text("You have been kicked."));
         player.sendMessage("Kicking " + target.getName());
+        return COMMAND_SUCCESS;
+    }
+
+    @Override
+    protected boolean hasPermission(CommandSender sender) {
+        return sender.hasPermission("disciplinex.moderation.kick");
+    }
+
+    @Override
+    protected boolean areArgsValid(String[] args) {
+        return args.length == 1;
+    }
+
+    @Override
+    protected TextComponent getUsageMessage() {
+        return PLUGIN_PREFIX
+                .append(Component.text("Correct arguments: /kick <player_name>"));
+    }
+
+    @Override
+    protected boolean execute(CommandSender sender, String[] args) {
+        Player p = (Player)sender;
+        Player target = Bukkit.getPlayer(args[0]); // We know that both this command requires a target, and that this target is valid due to
+                                                    // the implementation of Command.java
+        // Message which says to the player and target that the player has kicked the target, and the target has been kicked. Also add a full stop to both messages.
+        p.sendMessage(PLUGIN_PREFIX.append(Component.text("You have kicked " + target.getName() + ".")));
+
         return COMMAND_SUCCESS;
     }
 }

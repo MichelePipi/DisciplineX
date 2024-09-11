@@ -41,8 +41,11 @@ public class DatabaseHandler {
         return null;
     }
 
+
     public void setupDatabase() {
         createPlayersTable();
+        createActivePunishmentTable();
+        createPunishmentHistoryTable();
     }
 
     /**
@@ -66,6 +69,74 @@ public class DatabaseHandler {
                     "player_id INT PRIMARY KEY AUTO_INCREMENT," +
                     "uuid VARCHAR(36) UNIQUE NOT NULL," +
                     "name VARCHAR(16) NOT NULL);");
+            createTable.execute();
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while creating the players table. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
+    }
+
+    /**
+     * This function creates the players
+     * table for the database. Database Schema:
+     * <pre>
+     *     {@code
+     *     punishment_id	INT	PRIMARY KEY, AUTO_INCREMENT
+     *     player_id	INT	FOREIGN KEY REFERENCES players(player_id)
+     *     punisher_id	INT	FOREIGN KEY REFERENCES players(player_id)
+     *     type	ENUM	('BAN', 'MUTE', 'KICK', 'WARN'), NOT NULL
+     *     reason	TEXT
+     *     start_date	DATETIME	NOT NULL
+     *     expiry_date	DATETIME
+     *     expiry_date_actual	DATETIME
+     *     }
+     * </pre>
+     *
+     * This function is run synchronously as it is run once when the plugin is enabled.
+     */
+    @TestOnly
+    private void createActivePunishmentTable() {
+        Connection conn = createConnection();
+        try {
+            final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS active_punishments (" +
+                    "punishment_id INT PRIMARY KEY AUTO_INCREMENT," +
+                    "player_id INT FOREIGN KEY REFERENCES players(player_id)," +
+                    "punisher_id INT FOREIGN KEY REFERENCES players(player_id)," +
+                    "punishment_type ENUM('BAN', 'MUTE', 'KICK', 'WARN') NOT NULL," +
+                    "reason TEXT," +
+                    "start_date DATETIME NOT NULL," +
+                    "expiry_date DATETIME," +
+                    "expiry_date_actual DATETIME);");
+            createTable.execute();
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while creating the players table. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
+    }
+
+    /**
+     * This function creates the players
+     * table for the database. Database Schema:
+     * <pre>
+     *     {@code
+     *     id	INT	PRIMARY KEY, AUTO_INCREMENT
+     *     punishment_id	INT	FOREIGN KEY REFERENCES punishments(punishment_id)
+     *     action	ENUM	('CREATED', 'EXPIRED', 'LIFTED'), NOT NULL
+     *     timestamp	DATETIME	NOT NULL
+     *     }
+     * </pre>
+     *
+     * This function is run synchronously as it is run once when the plugin is enabled.
+     */
+    @TestOnly
+    private void createPunishmentHistoryTable() {
+        Connection conn = createConnection();
+        try {
+            final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS punishment_history (" +
+                    "id INT PRIMARY KEY AUTO_INCREMENT," +
+                    "punishment_id INT FOREIGN KEY REFERENCES punishments(punishment_id)," +
+                    "action ENUM('CREATED', 'EXPIRED', 'LIFTED') NOT NULL," +
+                    "timestamp DATETIME NOT NULL);");
             createTable.execute();
         } catch (SQLException e) {
             DisciplineX.severeError("A severe error has encountered while creating the players table. The plugin has been shut down.");

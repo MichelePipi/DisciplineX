@@ -12,4 +12,4 @@ Please also note the following:
 4. The plugin will start up and immediately shut down, prompting you to input database credentials.
 5. Open the `config.yml` file in the `plugins/DisciplineX` folder.
 6. Fill in the database credentials.
-7The plugin should now be installed and ready to use.
+7. The plugin should now be installed and ready to use.
