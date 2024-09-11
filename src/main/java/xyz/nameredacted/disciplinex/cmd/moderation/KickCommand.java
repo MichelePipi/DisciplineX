@@ -26,7 +26,7 @@ public class KickCommand extends Command {
 
 
     @ApiStatus.Obsolete
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd,
+    public boolean obseleteOnCommand(@NotNull CommandSender sender, @NotNull Command cmd,
                              @NotNull String s, @NotNull String[] args) {
         // check whether player or console executed the command
         if (!(sender instanceof Player)) {

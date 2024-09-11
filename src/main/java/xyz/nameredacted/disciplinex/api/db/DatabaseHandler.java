@@ -109,7 +109,8 @@ public class DatabaseHandler {
                     "expiry_date_actual DATETIME);");
             createTable.execute();
         } catch (SQLException e) {
-            DisciplineX.severeError("A severe error has encountered while creating the players table. The plugin has been shut down.");
+            DisciplineX.severeError("A severe error has encountered while executing a database query. The plugin has been shut down.");
+            e.printStackTrace();
             DisciplineX.getInstance().shutdownPlugin();
         }
     }
@@ -140,6 +141,7 @@ public class DatabaseHandler {
             createTable.execute();
         } catch (SQLException e) {
             DisciplineX.severeError("A severe error has encountered while creating the players table. The plugin has been shut down.");
+            e.printStackTrace();
             DisciplineX.getInstance().shutdownPlugin();
         }
     }
