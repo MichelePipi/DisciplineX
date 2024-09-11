@@ -13,11 +13,11 @@ import xyz.nameredacted.disciplinex.cmd.Command;
 import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.*;
 
 /**
- * TODO: Iteration 2, convert into implementation of Command rather than CommandExecutor.
+ * This class contains the code for the /kick command.
+ *
+ * @see Command
  */
 public class KickCommand extends Command {
-
-    @Over
 
     @ApiStatus.Obsolete
     private final String PLAYERS_ONLY = "Only players may execute this command.";
@@ -83,6 +83,7 @@ public class KickCommand extends Command {
                                                     // the implementation of Command.java
         // Message which says to the player and target that the player has kicked the target, and the target has been kicked. Also add a full stop to both messages.
         p.sendMessage(PLUGIN_PREFIX.append(Component.text("You have kicked " + target.getName() + ".")));
+        target.kick(Component.text("You have been kicked."));
 
         return COMMAND_SUCCESS;
     }
