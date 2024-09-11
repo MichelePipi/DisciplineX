@@ -100,8 +100,10 @@ public class DatabaseHandler {
         try {
             final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS active_punishments (" +
                     "punishment_id INT PRIMARY KEY AUTO_INCREMENT," +
-                    "player_id INT FOREIGN KEY REFERENCES players(player_id)," +
-                    "punisher_id INT FOREIGN KEY REFERENCES players(player_id)," +
+                    "player_id INT, " +
+                    "FOREIGN KEY (player_id) REFERENCES players(player_id)," +
+                    "punisher_id INT, " +
+                    "FOREIGN KEY (punisher_id) REFERENCES players(player_id)," +
                     "punishment_type ENUM('BAN', 'MUTE', 'KICK', 'WARN') NOT NULL," +
                     "reason TEXT," +
                     "start_date DATETIME NOT NULL," +
@@ -135,7 +137,8 @@ public class DatabaseHandler {
         try {
             final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS punishment_history (" +
                     "id INT PRIMARY KEY AUTO_INCREMENT," +
-                    "punishment_id INT FOREIGN KEY REFERENCES punishments(punishment_id)," +
+                    "punishment_id INT, " +
+                    "FOREIGN KEY (punishment_id) REFERENCES active_punishments(punishment_id)," +
                     "action ENUM('CREATED', 'EXPIRED', 'LIFTED') NOT NULL," +
                     "timestamp DATETIME NOT NULL);");
             createTable.execute();
