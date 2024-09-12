@@ -1,5 +1,7 @@
 package xyz.nameredacted.disciplinex.api;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
 
 import java.util.Date;
@@ -20,18 +22,20 @@ public class Punishment {
     private UUID blame;
     private Date origin;
     private Date expiry;
+    private String reason;
 
     // Prevent unnecessary initialisation
     private Punishment() {}
 
-    public Punishment(PunishmentTypes punishmentType, UUID playerPunished,
-                      UUID blame, Date origin,
-                      Date expiry) {
+    public Punishment(@NotNull PunishmentTypes punishmentType, @NotNull UUID playerPunished,
+                      @NotNull UUID blame, @NotNull Date origin,
+                      @Nullable Date expiry, @Nullable String reason) {
         this.punishmentType = punishmentType;
         this.playerPunished = playerPunished;
         this.blame = blame;
         this.origin = origin;
         this.expiry = expiry;
+        this.reason = reason;
     }
 
     /**
@@ -44,19 +48,21 @@ public class Punishment {
 
     /**
      * This function returns the UUID of the player
+     *
      * @return UUID
      */
-    public UUID getPlayerPunished() {
-        return playerPunished;
+    public String getPlayerPunished() {
+        return playerPunished.toString();
     }
 
     /**
      * This function returns the UUID of the player
      * who executed the punishment.
+     *
      * @return UUID
      */
-    public UUID getBlame() {
-        return blame;
+    public String getBlame() {
+        return blame.toString();
     }
 
     /**
@@ -75,5 +81,9 @@ public class Punishment {
      */
     public Date getExpiry() {
         return expiry;
+    }
+
+    public String getReason() {
+        return reason;
     }
 }

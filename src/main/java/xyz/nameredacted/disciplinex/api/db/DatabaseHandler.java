@@ -1,12 +1,15 @@
 package xyz.nameredacted.disciplinex.api.db;
 
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
 import xyz.nameredacted.disciplinex.DisciplineX;
 import xyz.nameredacted.disciplinex.api.Punishment;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -24,8 +27,8 @@ public class DatabaseHandler {
     private static final String host = "localhost";
     private static final int port = 3306;
     private static final String databaseName = "disciplinex";
-    private static final String username = "disciplinexdbb";
-    private static final String password = "example!";
+    private static final String username = "disciplinex";
+    private static final String password = "example";
 
     public static Connection createConnection() {
         try {
@@ -101,9 +104,9 @@ public class DatabaseHandler {
         try {
             final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS active_punishments (" +
                     "punishment_id INT PRIMARY KEY AUTO_INCREMENT," +
-                    "player_id INT, " +
+                    "player_id VARCHAR(36), " +
                     "FOREIGN KEY (player_id) REFERENCES players(player_id)," +
-                    "punisher_id INT, " +
+                    "punisher_id VARCHAR(36), " +
                     "FOREIGN KEY (punisher_id) REFERENCES players(player_id)," +
                     "punishment_type ENUM('BAN', 'MUTE', 'KICK', 'WARN') NOT NULL," +
                     "reason TEXT," +
@@ -111,7 +114,7 @@ public class DatabaseHandler {
                     "expiry_date DATETIME," +
                     "expiry_date_actual DATETIME);");
             /**
-             * Old query:
+             * Old query: Issue (11-09-2024)
              * "CREATE TABLE IF NOT EXISTS active_punishments (" +
              *                     "punishment_id INT PRIMARY KEY AUTO_INCREMENT," +
              *                     "player_id INT FOREIGN KEY (player_id) REFERENCES players(player_id)," +
@@ -172,7 +175,7 @@ public class DatabaseHandler {
 
     // Asynchronous ver. (checkmute)
     @TestOnly
-    public static CompletableFuture<ResultSet> asyncIsPlayerMuted(final @NotNull UUID uuid) {
+    public CompletableFuture<ResultSet> asyncIsPlayerMuted(final @NotNull UUID uuid) {
         return CompletableFuture.supplyAsync(() -> {
             Connection conn = createConnection();
             try {
@@ -187,7 +190,7 @@ public class DatabaseHandler {
     }
 
     // Synchronous ver. (checkmute)
-    public static boolean isPlayerMuted(final @NotNull UUID uuid) {
+    public boolean isPlayerMuted(final @NotNull UUID uuid) {
         boolean muted = false;
         Connection dbConnection = createConnection();
         try {
@@ -201,11 +204,26 @@ public class DatabaseHandler {
     }
 
     // Insert punishment into database (synchronous) (permanent)
-    public static void insertPunishment(final @NotNull Punishment punishment) {
+
+    /**
+     * This method is used to insert a punishment into the database.
+     * This method is synchronous. In the future (iteration 3) it will
+     * be converted to be an asynchronous implementation.
+     * @param punishment punishment object to insert into database
+     */
+    public void insertPunishment(final @NotNull Punishment punishment) {
         Connection conn = createConnection();
         try {
             final PreparedStatement insertPunishment = conn.prepareStatement("INSERT INTO active_punishments (player_id, punisher_id, punishment_type, reason, start_date, expiry_date, expiry_date_actual) VALUES (?, ?, ?, ?, ?, ?, ?);");
-//            insertPunishment.setInt(1, punishment.getPlayerId());
+            insertPunishment.setString(1, punishment.getPlayerPunished());
+            insertPunishment.setString(2, punishment.getBlame());
+            insertPunishment.setString(3, punishment.getPunishmentType().toString());
+            insertPunishment.setString(4, punishment.getReason());
+            insertPunishment.setTimestamp(5, new Timestamp(punishment.getOrigin().getTime()));
+            insertPunishment.setTimestamp(6, new Timestamp(punishment.getExpiry().getTime()));
+
+            insertPunishment.execute();
+            //            insertPunishment.setInt(1, punishment.getPlayerId());
 //            insertPunishment.setInt(2, punishment.getPunisherId());
 //            insertPunishment.setString(3, punishment.getPunishmentType().toString());
 //            insertPunishment.setString(4, punishment.getReason());
@@ -217,5 +235,33 @@ public class DatabaseHandler {
             DisciplineX.severeError("A severe error has encountered while inserting a punishment into the database. The plugin has been shut down.");
             DisciplineX.getInstance().shutdownPlugin();
         }
+    }
+
+    /**
+     * This method will retrieve every user which is currently muted.
+     * @return ResultSet containing every user which is currently muted.
+     */
+    public ArrayList<Player> getMutedPlayers() {
+        Connection conn = createConnection();
+        assert conn != null;
+        ArrayList<Player> mutedPlayers = new ArrayList<>();
+        try {
+            final PreparedStatement query = conn.prepareStatement("SELECT  FROM active_punishments WHERE punishment_type = 'MUTE';");
+            final ResultSet rs = query.executeQuery();
+            while (rs.next()) { // Get every player who is muted
+                Player p = getPlayerFromUuid(UUID.fromString(rs.getString("player_id"))); // Initialise variable for player
+                if (p == null) // Check if player is online before adding to list
+                    continue;
+                mutedPlayers.add(p); // Add player to list
+            }
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while querying the database. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
+        return mutedPlayers;
+    }
+
+    private Player getPlayerFromUuid(final @NotNull UUID uuid) {
+        return Bukkit.getPlayer(uuid);
     }
 }

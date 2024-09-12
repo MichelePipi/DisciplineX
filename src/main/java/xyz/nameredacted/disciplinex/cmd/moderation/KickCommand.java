@@ -78,7 +78,7 @@ public class KickCommand extends Command {
     }
 
     @Override
-    protected boolean execute(Player sender, String[] args) {
+    protected boolean execute(@NotNull Player sender, String[] args) {
         Player target = Bukkit.getPlayer(args[0]); // We know that both this command requires a target, and that this target is valid due to
                                                     // the implementation of Command.java
         // Message which says to the player and target that the player has kicked the target, and the target has been kicked. Also add a full stop to both messages.

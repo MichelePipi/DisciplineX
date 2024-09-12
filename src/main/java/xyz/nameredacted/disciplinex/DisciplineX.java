@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public final class DisciplineX extends JavaPlugin {
 
-    private static @NotNull Logger log;
+    private static Logger log;
     private static DisciplineX instance;
     private DatabaseHandler db;
 
@@ -30,6 +30,18 @@ public final class DisciplineX extends JavaPlugin {
         importCommands();
         db = new DatabaseHandler();
         db.setupDatabase();
+
+        /**
+         * TODO: First-run startup sequence.
+         *
+         * First:
+         * - Check if the plugin has been run before.
+         * - Then, before setting the database up inform the user the plugin has the function to completely wipe the database.
+         * - Send a SHA256-encrypted code to the console.
+         * - Have the user write it down somewhere, then type the code in.
+         * - Setup database
+         * - Continue running.
+         */
     }
 
     @Override
@@ -66,5 +78,9 @@ public final class DisciplineX extends JavaPlugin {
 
     public static void setInstance(DisciplineX instance) {
         DisciplineX.instance = instance;
+    }
+
+    public DatabaseHandler getDb() {
+        return db;
     }
 }
