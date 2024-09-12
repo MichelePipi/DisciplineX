@@ -241,7 +241,7 @@ public class DatabaseHandler {
      * This method will retrieve every user which is currently muted.
      * @return ResultSet containing every user which is currently muted.
      */
-    public ArrayList<Player> getMutedPlayers() {
+    public ArrayList<Player> getOnlineMutedPlayers() {
         Connection conn = createConnection();
         assert conn != null;
         ArrayList<Player> mutedPlayers = new ArrayList<>();

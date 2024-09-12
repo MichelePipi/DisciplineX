@@ -7,8 +7,9 @@ import org.bukkit.event.Listener;
 import xyz.nameredacted.disciplinex.DisciplineX;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.PLAYER_IS_MUTED;
 
 /**
  * This class is used to prevent muted
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  */
 public class AsyncPlayerChatEventHandler implements Listener {
 
-    ArrayList<Player> onlineMutedPlayers = new ArrayList<>();
+    private ArrayList<Player> onlineMutedPlayers = findAllMutedPlayers();
 
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
@@ -41,6 +42,12 @@ public class AsyncPlayerChatEventHandler implements Listener {
 //        });
 //
 //        event.setCancelled(true); // Stop the player's message from being sent
+        Player p = event.getPlayer();
+        if (isPlayerMuted(p)) {
+            // Send message to player
+            p.sendMessage(PLAYER_IS_MUTED);
+            event.setCancelled(true);
+        }
     }
 
     public void addMutedPlayer(Player player) {
@@ -58,7 +65,7 @@ public class AsyncPlayerChatEventHandler implements Listener {
     /**
      * Find every muted player.
      */
-    public void findAllMutedPlayers() {
+    private ArrayList<Player> findAllMutedPlayers() {
 //        DatabaseHandler.asyncGetAllMutedPlayers().thenAccept(rs -> {
 //            while (true) {
 //                try {
@@ -68,7 +75,6 @@ public class AsyncPlayerChatEventHandler implements Listener {
 //                }
 
         // Synchronous version
-        final ResultSet mutedPlayers = DisciplineX.getInstance().getDb().getMutedPlayers();
-        while (mutedPlayers.next()) {
+        return DisciplineX.getInstance().getDb().getOnlineMutedPlayers();
     }
 }
