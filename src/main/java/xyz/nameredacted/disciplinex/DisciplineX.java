@@ -37,12 +37,14 @@ public final class DisciplineX extends JavaPlugin {
         // Plugin shutdown logic
     }
 
+
     /**
      * This class is used to import every command
      * into the plugin. Make sure each command
      * is correctly included in the plugin.yml, or else
      * it will not be recognized by the plugin.
      */
+    @SuppressWarnings("ConstantConditions")
     private void importCommands() {
         getCommand("kick").setExecutor(new KickCommand());
         getCommand("ban").setExecutor(new BanCommand());

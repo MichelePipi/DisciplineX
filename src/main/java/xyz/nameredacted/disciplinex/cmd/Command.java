@@ -118,7 +118,7 @@ public abstract class Command implements CommandExecutor {
     /**
      * This method will have the command logic.
      */
-    protected abstract boolean execute(CommandSender sender, String[] args);
+    protected abstract boolean execute(Player player, String[] args);
 
     /**
      * This method will have the message containing

@@ -44,12 +44,11 @@ public class MuteCommand extends Command {
      * @return true if ran correctly, false if otherwise
      */
     @Override
-    protected boolean execute(CommandSender sender, String[] args) {
-        Player p = (Player) sender;
+    protected boolean execute(Player sender, String[] args) {
         Player targetPlayer = Bukkit.getPlayer(args[0]);
 
         if (!isPlayerOnline(targetPlayer)) {
-            p.sendMessage(StaticAccess.PLAYER_NOT_FOUND_MSG);
+            sender.sendMessage(StaticAccess.PLAYER_NOT_FOUND_MSG);
             return COMMAND_FAILED;
         }
 

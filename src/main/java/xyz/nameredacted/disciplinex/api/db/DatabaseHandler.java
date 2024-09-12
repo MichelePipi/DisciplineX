@@ -4,6 +4,7 @@ package xyz.nameredacted.disciplinex.api.db;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
 import xyz.nameredacted.disciplinex.DisciplineX;
+import xyz.nameredacted.disciplinex.api.Punishment;
 
 import java.sql.*;
 import java.util.UUID;
@@ -197,5 +198,24 @@ public class DatabaseHandler {
         }
 
         return muted;
+    }
+
+    // Insert punishment into database (synchronous) (permanent)
+    public static void insertPunishment(final @NotNull Punishment punishment) {
+        Connection conn = createConnection();
+        try {
+            final PreparedStatement insertPunishment = conn.prepareStatement("INSERT INTO active_punishments (player_id, punisher_id, punishment_type, reason, start_date, expiry_date, expiry_date_actual) VALUES (?, ?, ?, ?, ?, ?, ?);");
+//            insertPunishment.setInt(1, punishment.getPlayerId());
+//            insertPunishment.setInt(2, punishment.getPunisherId());
+//            insertPunishment.setString(3, punishment.getPunishmentType().toString());
+//            insertPunishment.setString(4, punishment.getReason());
+//            insertPunishment.setTimestamp(5, new Timestamp(punishment.getStartDate().getTime()));
+//            insertPunishment.setTimestamp(6, new Timestamp(punishment.getExpiryDate().getTime()));
+//            insertPunishment.setTimestamp(7, new Timestamp(punishment.getExpiryDateActual().getTime()));
+//            insertPunishment.execute();
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while inserting a punishment into the database. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
     }
 }

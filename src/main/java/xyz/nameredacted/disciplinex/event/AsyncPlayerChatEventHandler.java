@@ -36,9 +36,6 @@ public class AsyncPlayerChatEventHandler implements Listener {
            }
         });
 
-        if (true) { // First check whether the player is muted
-            return;
-        }
         event.setCancelled(true); // Stop the player's message from being sent
     }
 }

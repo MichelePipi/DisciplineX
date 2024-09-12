@@ -2,6 +2,7 @@ package xyz.nameredacted.disciplinex.cmd.moderation;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -77,12 +78,12 @@ public class KickCommand extends Command {
     }
 
     @Override
-    protected boolean execute(CommandSender sender, String[] args) {
-        Player p = (Player)sender;
+    protected boolean execute(Player sender, String[] args) {
         Player target = Bukkit.getPlayer(args[0]); // We know that both this command requires a target, and that this target is valid due to
                                                     // the implementation of Command.java
         // Message which says to the player and target that the player has kicked the target, and the target has been kicked. Also add a full stop to both messages.
-        p.sendMessage(PLUGIN_PREFIX.append(Component.text("You have kicked " + target.getName() + ".")));
+        assert target != null; // Target is never null, and will also always be online.
+        sender.sendMessage(PLUGIN_PREFIX.append(Component.text("You have kicked " + target.getName() + ".").color(NamedTextColor.WHITE)));
         target.kick(Component.text("You have been kicked."));
 
         return COMMAND_SUCCESS;
