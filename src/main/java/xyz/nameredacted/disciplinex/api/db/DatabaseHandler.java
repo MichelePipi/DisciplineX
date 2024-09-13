@@ -266,6 +266,15 @@ public class DatabaseHandler {
         return mutedPlayers;
     }
 
+    /**
+     * Perma-mute player
+     * @param punishment punishment object to insert into database
+     * @return
+     */
+    public void mutePlayer(final Punishment punishment) {
+        insertPunishment(punishment);
+    }
+
     private Player getPlayerFromUuid(final @NotNull UUID uuid) {
         return Bukkit.getPlayer(uuid);
     }
