@@ -14,4 +14,5 @@ xyz\nameredacted\disciplinex\exception\IncorrectArgumentException.class
 xyz\nameredacted\disciplinex\cmd\other\staffchat\StaffChatEventHandler.class
 xyz\nameredacted\disciplinex\api\QuickSort.class
 xyz\nameredacted\disciplinex\event\AsyncPlayerChatEventHandler.class
+xyz\nameredacted\disciplinex\api\SecureRand.class
 xyz\nameredacted\disciplinex\DisciplineX.class

@@ -4,11 +4,13 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 import xyz.nameredacted.disciplinex.DisciplineX;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
 
 import java.util.ArrayList;
 
+import static org.bukkit.event.EventPriority.HIGHEST;
 import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.PLAYER_IS_MUTED;
 
 /**
@@ -21,8 +23,8 @@ public class AsyncPlayerChatEventHandler implements Listener {
 
     private ArrayList<Player> onlineMutedPlayers = findAllMutedPlayers();
 
-    @EventHandler
-    public void onPlayerChat(AsyncChatEvent event) {
+    @EventHandler(priority = HIGHEST)
+    public void onPlayerChat(@NotNull AsyncChatEvent event) {
 //        final UUID messageSender = event.getPlayer().getUniqueId();
 //        DatabaseHandler.asyncIsPlayerMuted(messageSender).thenAccept(rs -> {
 //           while (true) {

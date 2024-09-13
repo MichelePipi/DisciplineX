@@ -47,7 +47,7 @@ public class MuteCommand extends Command {
     protected boolean execute(Player sender, String[] args) {
         Player targetPlayer = Bukkit.getPlayer(args[0]);
 
-        if (!isPlayerOnline(targetPlayer)) {
+        if (isPlayerOffline(targetPlayer)) {
             sender.sendMessage(StaticAccess.PLAYER_NOT_FOUND_MSG);
             return COMMAND_FAILED;
         }

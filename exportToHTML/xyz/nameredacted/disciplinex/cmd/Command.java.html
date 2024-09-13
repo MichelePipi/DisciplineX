@@ -1,0 +1,165 @@
+<html>
+<head>
+<title>Command.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #3d8beb; font-style: italic;}
+.s1 { color: #ececee;}
+.s2 { color: #ffffff; font-style: italic;}
+.s3 { color: #40bf77;}
+.s4 { color: #6f7a86; font-style: italic;}
+.s5 { color: #6f7a86; font-weight: bold; font-style: italic;}
+.s6 { color: #ffffff;}
+.s7 { color: #f9846c;}
+</style>
+</head>
+<body bgcolor="#202831">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Command.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">xyz</span><span class="s2">.</span><span class="s1">nameredacted</span><span class="s2">.</span><span class="s1">disciplinex</span><span class="s2">.</span><span class="s1">cmd</span><span class="s3">;</span>
+
+<span class="s0">import </span><span class="s1">net</span><span class="s2">.</span><span class="s1">kyori</span><span class="s2">.</span><span class="s1">adventure</span><span class="s2">.</span><span class="s1">text</span><span class="s2">.</span><span class="s1">TextComponent</span><span class="s3">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">bukkit</span><span class="s2">.</span><span class="s1">Bukkit</span><span class="s3">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">bukkit</span><span class="s2">.</span><span class="s1">command</span><span class="s2">.</span><span class="s1">CommandExecutor</span><span class="s3">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">bukkit</span><span class="s2">.</span><span class="s1">command</span><span class="s2">.</span><span class="s1">CommandSender</span><span class="s3">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">bukkit</span><span class="s2">.</span><span class="s1">entity</span><span class="s2">.</span><span class="s1">Player</span><span class="s3">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">jetbrains</span><span class="s2">.</span><span class="s1">annotations</span><span class="s2">.</span><span class="s1">NotNull</span><span class="s3">;</span>
+
+<span class="s0">import static </span><span class="s1">xyz</span><span class="s2">.</span><span class="s1">nameredacted</span><span class="s2">.</span><span class="s1">disciplinex</span><span class="s2">.</span><span class="s1">staticaccess</span><span class="s2">.</span><span class="s1">StaticAccess</span><span class="s2">.</span><span class="s3">*;</span>
+
+<span class="s4">/**</span>
+ <span class="s4">* Given that commands consistently repeat the same code across</span>
+ <span class="s4">* virtually every instance, this class is used to abstract the process</span>
+ <span class="s4">* and reduce redundancy. See command classes for implementation.</span>
+ <span class="s4">*</span>
+ <span class="s4">* Note: The &quot;protected&quot; keyword means that functions in the class can</span>
+ <span class="s4">* only be accessed by classes in the same package, or subpackages. Therefore,</span>
+ <span class="s4">* each command will be stored in the same package as this class.</span>
+ <span class="s4">* </span><span class="s5">@see </span><span class="s4">xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand</span>
+ <span class="s4">*/</span>
+<span class="s0">public abstract class </span><span class="s1">Command </span><span class="s0">implements </span><span class="s1">CommandExecutor </span><span class="s6">{</span>
+
+
+    <span class="s4">/**</span>
+     <span class="s4">* This abstract method is used to handle the command logic.</span>
+     <span class="s4">* As previously mentioned in the Javadocs, this method encapsulates</span>
+     <span class="s4">* the repeated command logic across the plugin, to simplify and reduce code complexity.</span>
+     <span class="s4">* See other command classes for appropriate implementation.</span>
+     <span class="s4">*</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">sender Source of the command</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">command Command which was executed</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">label Alias of the command which was used</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">args Passed command arguments</span>
+     <span class="s4">* </span><span class="s5">@return </span><span class="s4">true if successful execution, false otherwise.</span>
+     <span class="s4">* </span><span class="s5">@see </span><span class="s4">xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand</span>
+     <span class="s4">*/</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onCommand</span><span class="s6">(</span><span class="s1">@NotNull CommandSender sender</span><span class="s6">, </span><span class="s1">@NotNull org</span><span class="s2">.</span><span class="s1">bukkit</span><span class="s2">.</span><span class="s1">command</span><span class="s2">.</span><span class="s1">Command command</span><span class="s6">,</span>
+                             <span class="s1">@NotNull String label</span><span class="s6">, </span><span class="s1">@NotNull String</span><span class="s6">[] </span><span class="s1">args</span><span class="s6">) {</span>
+
+        <span class="s0">if </span><span class="s6">(</span><span class="s3">!</span><span class="s1">ifPlayer</span><span class="s6">(</span><span class="s1">sender</span><span class="s6">)) {</span>
+            <span class="s1">sender</span><span class="s2">.</span><span class="s1">sendMessage</span><span class="s6">(</span><span class="s1">PLAYERS_ONLY_MSG</span><span class="s6">)</span><span class="s3">;</span>
+            <span class="s0">return </span><span class="s1">COMMAND_FAILED</span><span class="s3">;</span>
+        <span class="s6">}</span>
+        <span class="s1">Player player </span><span class="s3">= </span><span class="s6">(</span><span class="s1">Player</span><span class="s6">) </span><span class="s1">sender</span><span class="s3">; </span><span class="s4">// Since we now know the executor is a player, explicitly cast sender as a player.</span>
+
+        <span class="s4">// Check if player does not have the required permission</span>
+        <span class="s0">if </span><span class="s6">(</span><span class="s3">!</span><span class="s1">hasPermission</span><span class="s6">(</span><span class="s1">player</span><span class="s6">)) {</span>
+            <span class="s1">player</span><span class="s2">.</span><span class="s1">sendMessage</span><span class="s6">(</span><span class="s1">PERMISSION_ERROR</span><span class="s6">)</span><span class="s3">;</span>
+            <span class="s4">// Play a low pitched cat growl sound, as a warning to the player. Make it random, but always at least low pitched.</span>
+            <span class="s1">player</span><span class="s2">.</span><span class="s1">playSound</span><span class="s6">(</span><span class="s1">player</span><span class="s2">.</span><span class="s1">getLocation</span><span class="s6">(), </span><span class="s3">&quot;minecraft:entity.cat.hiss&quot;</span><span class="s6">, </span><span class="s7">1.0f</span><span class="s6">, </span><span class="s7">0.5f</span><span class="s6">)</span><span class="s3">;</span>
+            <span class="s0">return </span><span class="s1">COMMAND_FAILED</span><span class="s3">;</span>
+        <span class="s6">}</span>
+
+        <span class="s4">// Check if the arguments are invalid</span>
+        <span class="s0">if </span><span class="s6">(</span><span class="s3">!</span><span class="s1">areArgsValid</span><span class="s6">(</span><span class="s1">args</span><span class="s6">)) {</span>
+            <span class="s1">player</span><span class="s2">.</span><span class="s1">sendMessage</span><span class="s6">(</span><span class="s1">getUsageMessage</span><span class="s6">())</span><span class="s3">;</span>
+            <span class="s0">return </span><span class="s1">COMMAND_FAILED</span><span class="s3">; </span><span class="s4">// Cancel command</span>
+        <span class="s6">}</span>
+
+        <span class="s4">// Only check whether the target is a player if the command requires it</span>
+        <span class="s0">if </span><span class="s6">(</span><span class="s1">requiresTargetPlayer</span><span class="s6">() </span><span class="s3">&amp;&amp; !</span><span class="s1">isPlayerOnline</span><span class="s6">(</span><span class="s1">getPlayer</span><span class="s6">(</span><span class="s1">args</span><span class="s6">[</span><span class="s7">0</span><span class="s6">]))) { </span><span class="s4">// Check whether command requires a target</span>
+                                                                             <span class="s4">// player and if the target player is online.</span>
+            <span class="s1">player</span><span class="s2">.</span><span class="s1">sendMessage</span><span class="s6">(</span><span class="s1">PLAYER_NOT_FOUND_MSG</span><span class="s6">)</span><span class="s3">;</span>
+            <span class="s0">return </span><span class="s1">COMMAND_FAILED</span><span class="s3">;</span>
+        <span class="s6">}</span>
+
+        <span class="s4">// Call the abstract method to handle the specific command logic</span>
+        <span class="s0">return </span><span class="s1">execute</span><span class="s6">(</span><span class="s1">player</span><span class="s6">, </span><span class="s1">args</span><span class="s6">)</span><span class="s3">;</span>
+    <span class="s6">}</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* This method is used to check if the command executor is a player.</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">sender who ran the command</span>
+     <span class="s4">* </span><span class="s5">@return </span><span class="s4">true if the command executor is a player, false otherwise</span>
+     <span class="s4">*/</span>
+    <span class="s0">private boolean </span><span class="s1">ifPlayer</span><span class="s6">(</span><span class="s1">CommandSender sender</span><span class="s6">) {</span>
+        <span class="s0">return </span><span class="s1">sender </span><span class="s0">instanceof </span><span class="s1">org</span><span class="s2">.</span><span class="s1">bukkit</span><span class="s2">.</span><span class="s1">entity</span><span class="s2">.</span><span class="s1">Player</span><span class="s3">;</span>
+    <span class="s6">}</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* This method checks, given some Player, whether it is online.</span>
+     <span class="s4">* To prevent exceptions, it checks whether the player exists before</span>
+     <span class="s4">* running the Player#isOnline() function.</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">p</span>
+     <span class="s4">* </span><span class="s5">@return </span><span class="s4">true if player is online, false if it either does not exist or is not online.</span>
+     <span class="s4">*/</span>
+    <span class="s0">protected boolean </span><span class="s1">isPlayerOnline</span><span class="s6">(</span><span class="s0">final </span><span class="s1">Player p</span><span class="s6">) {</span>
+        <span class="s0">if </span><span class="s6">(</span><span class="s3">!</span><span class="s1">doesPlayerExist</span><span class="s6">(</span><span class="s1">p</span><span class="s6">)) {</span>
+            <span class="s0">return false</span><span class="s3">;</span>
+        <span class="s6">}</span>
+        <span class="s0">return </span><span class="s1">p</span><span class="s2">.</span><span class="s1">isOnline</span><span class="s6">()</span><span class="s3">;</span>
+    <span class="s6">}</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* This method checks whether some Player is online.</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">p</span>
+     <span class="s4">* </span><span class="s5">@return </span><span class="s4">true if the player exists, false otherwise.</span>
+     <span class="s4">*/</span>
+    <span class="s0">private boolean </span><span class="s1">doesPlayerExist</span><span class="s6">(</span><span class="s0">final </span><span class="s1">Player p</span><span class="s6">) {</span>
+        <span class="s0">return </span><span class="s1">p </span><span class="s3">!= </span><span class="s0">null</span><span class="s3">;</span>
+    <span class="s6">}</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* This method is used to check if the command executor has permission.</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">sender who ran the command</span>
+     <span class="s4">* </span><span class="s5">@return </span><span class="s4">true if the command executor has permission, false otherwise</span>
+     <span class="s4">*/</span>
+    <span class="s0">protected abstract boolean </span><span class="s1">hasPermission</span><span class="s6">(</span><span class="s1">CommandSender sender</span><span class="s6">)</span><span class="s3">;</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* This method checks whether the arguments provided by the player are valid.</span>
+     <span class="s4">* </span><span class="s5">@param </span><span class="s4">args the arguments provided by the player</span>
+     <span class="s4">*/</span>
+    <span class="s0">protected abstract boolean </span><span class="s1">areArgsValid</span><span class="s6">(</span><span class="s1">String</span><span class="s6">[] </span><span class="s1">args</span><span class="s6">)</span><span class="s3">;</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* This method will have the command logic.</span>
+     <span class="s4">*/</span>
+    <span class="s0">protected abstract boolean </span><span class="s1">execute</span><span class="s6">(</span><span class="s1">Player player</span><span class="s6">, </span><span class="s1">String</span><span class="s6">[] </span><span class="s1">args</span><span class="s6">)</span><span class="s3">;</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* This method will have the message containing</span>
+     <span class="s4">* the correct arguments that the executor did not provide.</span>
+     <span class="s4">* </span><span class="s5">@return </span><span class="s4">TextComponent containing the correct arguments</span>
+     <span class="s4">*/</span>
+    <span class="s0">protected abstract </span><span class="s1">TextComponent getUsageMessage</span><span class="s6">()</span><span class="s3">;</span>
+
+    <span class="s4">/**</span>
+     <span class="s4">* Determines whether the target player existing check will be run.</span>
+     <span class="s4">* </span><span class="s5">@return </span><span class="s4">false unless overrided by implementation</span>
+     <span class="s4">*/</span>
+    <span class="s0">protected boolean </span><span class="s1">requiresTargetPlayer</span><span class="s6">() {</span>
+        <span class="s0">return false</span><span class="s3">;</span>
+    <span class="s6">}</span>
+
+    <span class="s0">private </span><span class="s1">Player getPlayer</span><span class="s6">(</span><span class="s0">final </span><span class="s1">@NotNull String str</span><span class="s6">) {</span>
+        <span class="s0">return </span><span class="s1">Bukkit</span><span class="s2">.</span><span class="s1">getPlayer</span><span class="s6">(</span><span class="s1">str</span><span class="s6">)</span><span class="s3">;</span>
+    <span class="s6">}</span>
+<span class="s6">}</span>
+</pre>
+</body>
+</html>

@@ -27,7 +27,7 @@ public class StaticAccess {
         .color(TextColor.color(PLUGIN_PREFIX_COLOR_RED, PLUGIN_PREFIX_COLOR_GREEN, PLUGIN_PREFIX_COLOR_BLUE));
 
 //    ERROR MESSAGES
-    public static final TextComponent PLAYERS_ONLY_MSG = PLUGIN_PREFIX.append(Component.text("Only players may execute this command."));
+    public static final TextComponent PLAYERS_ONLY_MSG = PLUGIN_PREFIX.append(Component.text("Only players may execute this command.").color(NamedTextColor.WHITE));
     public static final TextComponent PLAYER_NOT_FOUND_MSG = PLUGIN_PREFIX.append(Component.text("The player you selected is either not online or does not exist."));
     public static final TextComponent PERMISSION_ERROR = PLUGIN_PREFIX.append(Component.text("Sorry, you do not have permission to access this command.").color(NamedTextColor.RED));
 

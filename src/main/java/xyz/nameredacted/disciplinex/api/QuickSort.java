@@ -25,7 +25,7 @@ public class QuickSort {
      *         // Recursively sort elements before and after partition
      *         quickSort(arr, low, pivotIndex - 1)
      *         quickSort(arr, pivotIndex + 1, high)
-     *
+     * <p>
      * function partition(arr, low, high):
      *     // Select the last element as pivot
      *     pivot = arr[high]

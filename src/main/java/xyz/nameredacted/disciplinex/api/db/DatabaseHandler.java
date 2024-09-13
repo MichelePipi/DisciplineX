@@ -28,9 +28,15 @@ public class DatabaseHandler {
     private static final int port = 3306;
     private static final String databaseName = "disciplinex";
     private static final String username = "disciplinex";
-    private static final String password = "example";
+    private static final String password = "password";
 
     public static Connection createConnection() {
+        System.out.println("Database Credentials");
+        System.out.println(host);
+        System.out.println(port);
+        System.out.println(databaseName);
+        System.out.println(username);
+        System.out.println(password);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + databaseName, username, password);
@@ -105,9 +111,9 @@ public class DatabaseHandler {
             final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS active_punishments (" +
                     "punishment_id INT PRIMARY KEY AUTO_INCREMENT," +
                     "player_id VARCHAR(36), " +
-                    "FOREIGN KEY (player_id) REFERENCES players(player_id)," +
+                    "FOREIGN KEY (player_id) REFERENCES players(uuid)," +
                     "punisher_id VARCHAR(36), " +
-                    "FOREIGN KEY (punisher_id) REFERENCES players(player_id)," +
+                    "FOREIGN KEY (punisher_id) REFERENCES players(uuid)," +
                     "punishment_type ENUM('BAN', 'MUTE', 'KICK', 'WARN') NOT NULL," +
                     "reason TEXT," +
                     "start_date DATETIME NOT NULL," +
@@ -152,7 +158,6 @@ public class DatabaseHandler {
         Connection conn = createConnection();
         try {
             final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS punishment_history (" +
-                    "id INT PRIMARY KEY AUTO_INCREMENT," +
                     "punishment_id INT, " +
                     "FOREIGN KEY (punishment_id) REFERENCES active_punishments(punishment_id)," +
                     "action ENUM('CREATED', 'EXPIRED', 'LIFTED') NOT NULL," +

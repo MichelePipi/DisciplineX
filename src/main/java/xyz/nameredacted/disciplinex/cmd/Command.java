@@ -60,7 +60,7 @@ public abstract class Command implements CommandExecutor {
         }
 
         // Only check whether the target is a player if the command requires it
-        if (requiresTargetPlayer() && !isPlayerOnline(getPlayer(args[0]))) { // Check whether command requires a target
+        if (requiresTargetPlayer() && isPlayerOffline(getPlayer(args[0]))) { // Check whether command requires a target
                                                                              // player and if the target player is online.
             player.sendMessage(PLAYER_NOT_FOUND_MSG);
             return COMMAND_FAILED;
@@ -71,12 +71,12 @@ public abstract class Command implements CommandExecutor {
     }
 
     /**
-     * This method is used to check if the command executor is a player.
-     * @param sender who ran the command
+     * This method is used to check if some object is an instance of org.bukkit.enity.Player; if they are a player.
+     * @param obj Object to test
      * @return true if the command executor is a player, false otherwise
      */
-    private boolean ifPlayer(CommandSender sender) {
-        return sender instanceof org.bukkit.entity.Player;
+    private boolean ifPlayer(Object obj) {
+        return obj instanceof org.bukkit.entity.Player;
     }
 
     /**
@@ -86,11 +86,11 @@ public abstract class Command implements CommandExecutor {
      * @param p
      * @return true if player is online, false if it either does not exist or is not online.
      */
-    protected boolean isPlayerOnline(final Player p) {
+    protected boolean isPlayerOffline(final Player p) {
         if (!doesPlayerExist(p)) {
-            return false;
+            return true;
         }
-        return p.isOnline();
+        return !p.isOnline();
     }
 
     /**
