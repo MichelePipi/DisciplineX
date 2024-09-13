@@ -4,6 +4,8 @@ Please also note the following:
 - This plugin should be run on Java 21.
 - This plugin is not guaranteed to work on other versions of Java, and will not be tested to run on this version.
 - This plugin has only been tested to work on PaperMC 1.21, and will most likely break on Spigot due to its use of the Adventure API.
+- Do not, under any circumstances, RELOAD the server while this plugin is running. This will cause the plugin to break and will require a server restart to fix. Plugins (including this one) are not designed to work after reloading a server.
+- This plugin is in the beta track. Do not use this plugin in a production environment.
 
 # Installation
 1. Releases will most likely not be created for this plugin. Please compile with source using Apache Maven.

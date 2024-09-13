@@ -3,6 +3,7 @@ package xyz.nameredacted.disciplinex.exception;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand;
 
 /**
@@ -19,6 +20,7 @@ import xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand;
  * } </pre>
  * @see MuteCommand
  */
+@ApiStatus.Obsolete
 public class IncorrectArgumentException extends Exception {
 
     public IncorrectArgumentException(Component errorMessage, Player p) {

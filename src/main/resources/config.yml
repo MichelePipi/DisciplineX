@@ -1,13 +1,14 @@
-plugin_run_before = False # DO NOT change this. EVER. 
+plugin_run_before: 'False' # DO NOT change this. EVER.
 
-wipe_database_pin = ''
+wipe_database_pin: ''
 
-db_type = 'mysql' # do not change
+db_type: 'mysql' # do not change
 
 # Database Information 
 # On practically every configuation, these values will be changed.
-host = 'localhost'
-port = 3306
-database = 'disciplinex' 
-user = 'disciplinexdbb'
-passphrase = 'example!'
+database:
+  host: 'localhost'
+  port: 3306
+  database: 'disciplinex'
+  user: 'disciplinexdbb'
+  passphrase: 'example!'
