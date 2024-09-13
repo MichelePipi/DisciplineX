@@ -86,7 +86,7 @@ public abstract class Command implements CommandExecutor {
      * @param p
      * @return true if player is online, false if it either does not exist or is not online.
      */
-    protected boolean isPlayerOffline(final Player p) {
+    private boolean isPlayerOffline(final Player p) {
         if (!doesPlayerExist(p)) {
             return true;
         }

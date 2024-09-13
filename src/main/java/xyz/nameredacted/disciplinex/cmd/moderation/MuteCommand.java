@@ -29,8 +29,19 @@ public class MuteCommand extends Command {
     }
 
     @Override
+    protected boolean requiresTargetPlayer() {
+        return true;
+    }
+
+    @Override
     protected boolean areArgsValid(String[] args) {
         return args.length == 1;
+    }
+
+    @Override
+    protected TextComponent getUsageMessage() {
+        return StaticAccess.PLUGIN_PREFIX
+                .append(Component.text("Correct arguments: /mute <player_name>"));
     }
 
     /**
@@ -47,22 +58,13 @@ public class MuteCommand extends Command {
     protected boolean execute(Player sender, String[] args) {
         Player targetPlayer = Bukkit.getPlayer(args[0]);
 
-        if (isPlayerOffline(targetPlayer)) {
-            sender.sendMessage(StaticAccess.PLAYER_NOT_FOUND_MSG);
-            return COMMAND_FAILED;
-        }
+        mute()
 
         return StaticAccess.COMMAND_SUCCESS;
     }
 
-    @Override
-    protected TextComponent getUsageMessage() {
-        return StaticAccess.PLUGIN_PREFIX
-                .append(Component.text("Correct arguments: /mute <player_name>"));
-    }
-
     @ApiStatus.Obsolete
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd,
+    public boolean obseleteOnCommand(@NotNull CommandSender sender, @NotNull Command cmd,
                              @NotNull String s, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(PLAYERS_ONLY_MSG);
@@ -85,6 +87,15 @@ public class MuteCommand extends Command {
             p.sendMessage(PERMISSION_ERROR);
             return true;
         }
+
+    }
+
+
+    /**
+     * Use this method to mute a player.
+     * Use db function.
+     */
+    private void mute() {
 
     }
 }
