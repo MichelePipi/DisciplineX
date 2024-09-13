@@ -24,13 +24,41 @@ public class DatabaseHandler {
      * credentials available to change in config.yml
      */
 
-    private static final String host = "localhost";
-    private static final int port = 3306;
-    private static final String databaseName = "disciplinex";
-    private static final String username = "disciplinex";
-    private static final String password = "password";
+    private String host;
+    private int port;
+    private String databaseName;
+    private String username;
+    private String password;
+    private final DisciplineX instance = DisciplineX.getInstance();
 
-    public static Connection createConnection() {
+//    private static final String host = "localhost";
+//    private static final int port = 3306;
+//    private static final String databaseName = "disciplinex";
+//    private static final String username = "disciplinex";
+//    private static final String password = "password";
+
+    /**
+     * Retrieve db credentials from config.yml
+     */
+    public DatabaseHandler() {
+        refreshCredentials();
+    }
+
+
+    private void refreshCredentials() {
+        host = instance.getConfig().getString("database.host");
+        port = instance.getConfig().getInt("database.port");
+        databaseName = instance.getConfig().getString("database.database");
+        username = instance.getConfig().getString("database.user");
+        password = instance.getConfig().getString("database.passphrase");
+    }
+
+    /**
+     * This function is used to connect to the database.
+     * TODO: In Sprint 2, make database credentials available to change in config.yml
+     * @return
+     */
+    private Connection createConnection() {
         System.out.println("Database Credentials");
         System.out.println(host);
         System.out.println(port);

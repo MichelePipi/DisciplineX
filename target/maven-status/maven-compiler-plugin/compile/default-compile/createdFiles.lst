@@ -10,6 +10,7 @@ xyz\nameredacted\disciplinex\staticaccess\StaticAccess.class
 xyz\nameredacted\disciplinex\api\Punishment.class
 xyz\nameredacted\disciplinex\api\PunishmentTypes.class
 xyz\nameredacted\disciplinex\api\PunshmentExpirationReasons.class
+xyz\nameredacted\disciplinex\api\HashUtils.class
 xyz\nameredacted\disciplinex\exception\IncorrectArgumentException.class
 xyz\nameredacted\disciplinex\cmd\other\staffchat\StaffChatEventHandler.class
 xyz\nameredacted\disciplinex\api\QuickSort.class

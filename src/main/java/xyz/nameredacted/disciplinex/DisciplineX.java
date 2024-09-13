@@ -28,8 +28,12 @@ public final class DisciplineX extends JavaPlugin {
         log = getLogger();
         setInstance(this);
         importCommands();
+        saveDefaultConfig(); // Save new config file, if it does not exist.
+        info("Attempting to connect to database...");
         db = new DatabaseHandler();
+        info("Setting up database...");
         db.setupDatabase();
+        info("Database setup ✅");
 
         /**
          * TODO: First-run startup sequence.
@@ -76,11 +80,37 @@ public final class DisciplineX extends JavaPlugin {
         return instance;
     }
 
-    public static void setInstance(DisciplineX instance) {
+    private void setInstance(@NotNull DisciplineX instance) {
         DisciplineX.instance = instance;
     }
 
     public DatabaseHandler getDb() {
         return db;
+    }
+
+    private void info(@NotNull String msg) {
+        log.info(msg);
+    }
+
+    /**
+     * Returns a string from the config.yml file, returning an empty quote if the key does not exist.
+     * @param key
+     * @return string empty if not found.
+     */
+    public String getStringFromConfig(final String key) {
+        return getConfig().getString(key, ""); // def parameter is what will be returned if the key does not exist.
+    }
+
+    /**
+     * Returns an integer from the config.yml file, returning 0 if the key does not exist.
+     * @param key
+     * @return integer 0 if not found.
+     */
+    public int getIntFromConfig(final String key) {
+        return getConfig().getInt(key, 0);
+    }
+
+    public Object getFromConfig(final String key) {
+        return getConfig().get(key);
     }
 }
