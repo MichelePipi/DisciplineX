@@ -330,4 +330,24 @@ public class DatabaseHandler {
             DisciplineX.getInstance().shutdownPlugin();
         }
     }
+
+    /**
+     * This function checks whether a player is already in the players table.
+     * This function is used to prevent duplicate entries in the database.
+     * @param player player to check
+     * @return true if played has played before, false otherwise.
+     */
+    public boolean playerHasPlayedBefore(final @NotNull Player player) {
+        Connection conn = createConnection();
+        try {
+            final PreparedStatement query = conn.prepareStatement("SELECT * FROM players WHERE uuid = ?;");
+            query.setString(1, player.getUniqueId().toString());
+            final ResultSet rs = query.executeQuery();
+            return rs.next(); // Query will only have results if the player has played before. Therefore, if this is true then the player is in the database.
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while querying the database. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
+        return false;
+    }
 }
