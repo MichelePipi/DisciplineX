@@ -314,10 +314,20 @@ public class DatabaseHandler {
         insertPunishment(punishment);
     }
 
+    /**
+     * This method is used to retrieve a player from their UUID.
+     * @param uuid UUID of the player to retrieve
+     * @return Player object of the player with the given UUID
+     */
     private Player getPlayerFromUuid(final @NotNull UUID uuid) {
         return Bukkit.getPlayer(uuid);
     }
 
+
+    /**
+     * This method inserts a new player into the players table.
+     * @param player player to insert into the database
+     */
     public void insertPlayer(final @NotNull Player player) {
         Connection conn = createConnection();
         try {
