@@ -11,6 +11,9 @@ public class PlayerJoinEventHandler implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
+        // Make sure to not insert players who have already been inserted into the database before.
+        if (p.hasPlayedBefore())
+            return;
         DisciplineX.getInstance().getDb().insertPlayer(p);
     }
 }
