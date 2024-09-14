@@ -254,12 +254,13 @@ public class DatabaseHandler {
             insertPunishment.setString(3, punishment.getPunishmentType().toString());
 //            insertPunishment.setString(4, punishment.getReason());
             insertPunishment.setTimestamp(5, new Timestamp(punishment.getOrigin().getTime()));
+            // If the punishment does not have an expiry, it is permanent.
             if (punishment.getExpiry() == null) {
-                // insert date with year 9999
+                // insert date with year 9999, so it never expires.
                 insertPunishment.setTimestamp(6, new Timestamp(253402214400000L));
-            } else
+            } else // If the punishment has an expiry, insert the expiry date.
                 insertPunishment.setTimestamp(6, new Timestamp(punishment.getExpiry().getTime()));
-            if (punishment.getReason() == null) {
+            if (punishment.getReason() == null) { // If there is no reason provided
                 insertPunishment.setString(4, "No reason provided.");
             } else
                 insertPunishment.setString(4, punishment.getReason());

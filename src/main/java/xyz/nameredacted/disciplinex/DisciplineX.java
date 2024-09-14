@@ -1,5 +1,6 @@
 package xyz.nameredacted.disciplinex;
 
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
@@ -70,8 +71,12 @@ public final class DisciplineX extends JavaPlugin {
         getCommand("warn").setExecutor(new WarnCommand());
         getCommand("mute").setExecutor(new MuteCommand());
         getCommand("refreshdatabase").setExecutor(new RefreshDatabaseCommand());
-        getServer().getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
-        getServer().getPluginManager().registerEvents(new AsyncPlayerChatEventHandler(), this);
+    }
+
+    private void importEvents() {
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new PlayerJoinEventHandler(), this);
+        pm.registerEvents(new AsyncPlayerChatEventHandler(), this);
     }
 
     public static void severeError(final @NotNull String msg) {
