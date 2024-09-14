@@ -21,7 +21,7 @@ import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.PLAYER_IS_M
  */
 public class AsyncPlayerChatEventHandler implements Listener {
 
-    private ArrayList<Player> onlineMutedPlayers = findAllMutedPlayers();
+    private ArrayList<Player> onlineMutedPlayers;
 
     @EventHandler(priority = HIGHEST)
     public void onPlayerChat(@NotNull AsyncChatEvent event) {
@@ -44,6 +44,10 @@ public class AsyncPlayerChatEventHandler implements Listener {
 //        });
 //
 //        event.setCancelled(true); // Stop the player's message from being sent
+        onlineMutedPlayers = findAllMutedPlayers();
+        onlineMutedPlayers.stream().forEach(player -> {
+            System.out.println(player.getName());
+        });
         Player p = event.getPlayer();
         if (isPlayerMuted(p)) {
             // Send message to player

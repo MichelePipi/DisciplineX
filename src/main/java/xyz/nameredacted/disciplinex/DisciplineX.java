@@ -3,10 +3,13 @@ package xyz.nameredacted.disciplinex;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
+import xyz.nameredacted.disciplinex.cmd.admin.RefreshDatabaseCommand;
 import xyz.nameredacted.disciplinex.cmd.moderation.BanCommand;
 import xyz.nameredacted.disciplinex.cmd.moderation.KickCommand;
 import xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand;
 import xyz.nameredacted.disciplinex.cmd.moderation.WarnCommand;
+import xyz.nameredacted.disciplinex.event.AsyncPlayerChatEventHandler;
+import xyz.nameredacted.disciplinex.event.PlayerJoinEventHandler;
 
 import java.util.logging.Logger;
 
@@ -66,6 +69,9 @@ public final class DisciplineX extends JavaPlugin {
         getCommand("ban").setExecutor(new BanCommand());
         getCommand("warn").setExecutor(new WarnCommand());
         getCommand("mute").setExecutor(new MuteCommand());
+        getCommand("refreshdatabase").setExecutor(new RefreshDatabaseCommand());
+        getServer().getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
+        getServer().getPluginManager().registerEvents(new AsyncPlayerChatEventHandler(), this);
     }
 
     public static void severeError(final @NotNull String msg) {

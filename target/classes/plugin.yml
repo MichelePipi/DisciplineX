@@ -15,3 +15,6 @@ commands:
 #    permission: disciplinex.moderation.mute
   warn:
 #    permission: disciplinex.moderation.warn
+  refreshdatabase:
+    permission: disciplinex.admin.refreshdatabase
+    description: Refresh the database with the latest credentials.

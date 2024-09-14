@@ -39,10 +39,11 @@ public abstract class Command implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command,
                              @NotNull String label, @NotNull String[] args) {
 
-        if (!ifPlayer(sender)) {
+        if (!ifPlayer(sender) && commandIsPlayersOnly()) {
             sender.sendMessage(PLAYERS_ONLY_MSG);
             return COMMAND_FAILED;
         }
+
         Player player = (Player) sender; // Since we now know the executor is a player, explicitly cast sender as a player.
 
         // Check if player does not have the required permission
@@ -91,6 +92,14 @@ public abstract class Command implements CommandExecutor {
             return true;
         }
         return !p.isOnline();
+    }
+
+    /**
+     * This method is used to check if the command is only for players.
+     * @return true if the command is only for players, false otherwise
+     */
+    protected boolean commandIsPlayersOnly() {
+        return true;
     }
 
     /**

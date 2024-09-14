@@ -16,6 +16,7 @@ import xyz.nameredacted.disciplinex.exception.IncorrectArgumentException;
 import xyz.nameredacted.disciplinex.staticaccess.StaticAccess;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.*;
@@ -60,6 +61,8 @@ public class MuteCommand extends Command {
             return COMMAND_FAILED;
         }
 
+        mute(sender, targetPlayer);
+
         return StaticAccess.COMMAND_SUCCESS;
     }
 
@@ -98,14 +101,14 @@ public class MuteCommand extends Command {
 
     private void mute(final Player player, final Player blame) {
         onlineMutedPlayers.add(player);
-        Punishment punishment = new Punishment(PunishmentTypes.MUTE, player.getUniqueId(), blame.getUniqueId(), null, null, null);
+        Punishment punishment = new Punishment(PunishmentTypes.MUTE, player.getUniqueId(), blame.getUniqueId(), new Date(), null, null);
         DisciplineX.getInstance().getDb().mutePlayer(punishment);
     }
 
     /**
      * This method checks whether a player is muted based on their Player object.
      * @param player
-     * @return true if the player is muted, false otherwise
+     * @return true if the player is muted, false otherwiset
      */
     public boolean isPlayerMuted(final Player player) {
         return onlineMutedPlayers.contains(player);

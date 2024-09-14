@@ -45,7 +45,7 @@ public class DatabaseHandler {
     }
 
 
-    private void refreshCredentials() {
+    public void refreshCredentials() {
         host = instance.getConfig().getString("database.host");
         port = instance.getConfig().getInt("database.port");
         databaseName = instance.getConfig().getString("database.database");
@@ -69,9 +69,11 @@ public class DatabaseHandler {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + databaseName, username, password);
         } catch (SQLException e) {
-            DisciplineX.severeError("The plugin has made an error to connect to the MySQL Database and has been shut down." +
-                    "\nPlease check your configuration. This is most likely due to incorrect credentials.");
-            e.printStackTrace();
+            for (int i = 0; i < 3; i++) {
+                DisciplineX.severeError("The plugin has made an error to connect to the MySQL Database and has been shut down." +
+                        "\nPlease check your configuration. This is most likely due to incorrect credentials.");
+            }
+//            e.printStackTrace();
             DisciplineX.getInstance().shutdownPlugin();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -145,8 +147,7 @@ public class DatabaseHandler {
                     "punishment_type ENUM('BAN', 'MUTE', 'KICK', 'WARN') NOT NULL," +
                     "reason TEXT," +
                     "start_date DATETIME NOT NULL," +
-                    "expiry_date DATETIME," +
-                    "expiry_date_actual DATETIME);");
+                    "expiry_date DATETIME)");
             /**
              * Old query: Issue (11-09-2024)
              * "CREATE TABLE IF NOT EXISTS active_punishments (" +
@@ -247,13 +248,21 @@ public class DatabaseHandler {
     public void insertPunishment(final @NotNull Punishment punishment) {
         Connection conn = createConnection();
         try {
-            final PreparedStatement insertPunishment = conn.prepareStatement("INSERT INTO active_punishments (player_id, punisher_id, punishment_type, reason, start_date, expiry_date, expiry_date_actual) VALUES (?, ?, ?, ?, ?, ?, ?);");
+            final PreparedStatement insertPunishment = conn.prepareStatement("INSERT INTO active_punishments (player_id, punisher_id, punishment_type, reason, start_date, expiry_date) VALUES (?, ?, ?, ?, ?, ?);");
             insertPunishment.setString(1, punishment.getPlayerPunished());
             insertPunishment.setString(2, punishment.getBlame());
             insertPunishment.setString(3, punishment.getPunishmentType().toString());
-            insertPunishment.setString(4, punishment.getReason());
+//            insertPunishment.setString(4, punishment.getReason());
             insertPunishment.setTimestamp(5, new Timestamp(punishment.getOrigin().getTime()));
-            insertPunishment.setTimestamp(6, new Timestamp(punishment.getExpiry().getTime()));
+            if (punishment.getExpiry() == null) {
+                // insert date with year 9999
+                insertPunishment.setTimestamp(6, new Timestamp(253402214400000L));
+            } else
+                insertPunishment.setTimestamp(6, new Timestamp(punishment.getExpiry().getTime()));
+            if (punishment.getReason() == null) {
+                insertPunishment.setString(4, "No reason provided.");
+            } else
+                insertPunishment.setString(4, punishment.getReason());
 
             insertPunishment.execute();
             //            insertPunishment.setInt(1, punishment.getPlayerId());
@@ -267,6 +276,7 @@ public class DatabaseHandler {
         } catch (SQLException e) {
             DisciplineX.severeError("A severe error has encountered while inserting a punishment into the database. The plugin has been shut down.");
             DisciplineX.getInstance().shutdownPlugin();
+            e.printStackTrace();
         }
     }
 
@@ -279,7 +289,7 @@ public class DatabaseHandler {
         assert conn != null;
         ArrayList<Player> mutedPlayers = new ArrayList<>();
         try {
-            final PreparedStatement query = conn.prepareStatement("SELECT  FROM active_punishments WHERE punishment_type = 'MUTE';");
+            final PreparedStatement query = conn.prepareStatement("SELECT player_id FROM active_punishments WHERE punishment_type = 'MUTE';");
             final ResultSet rs = query.executeQuery();
             while (rs.next()) { // Get every player who is muted
                 Player p = getPlayerFromUuid(UUID.fromString(rs.getString("player_id"))); // Initialise variable for player
@@ -305,5 +315,18 @@ public class DatabaseHandler {
 
     private Player getPlayerFromUuid(final @NotNull UUID uuid) {
         return Bukkit.getPlayer(uuid);
+    }
+
+    public void insertPlayer(final @NotNull Player player) {
+        Connection conn = createConnection();
+        try {
+            final PreparedStatement insertPlayer = conn.prepareStatement("INSERT INTO players (uuid, name) VALUES (?, ?);");
+            insertPlayer.setString(1, player.getUniqueId().toString());
+            insertPlayer.setString(2, player.getName());
+            insertPlayer.execute();
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while inserting a player into the database. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
     }
 }
