@@ -8,6 +8,7 @@ import org.jetbrains.annotations.TestOnly;
 import xyz.nameredacted.disciplinex.DisciplineX;
 import xyz.nameredacted.disciplinex.api.Punishment;
 import xyz.nameredacted.disciplinex.api.PunishmentTypes;
+import xyz.nameredacted.disciplinex.api.PunshmentExpirationReasons;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -431,12 +432,12 @@ public class DatabaseHandler {
     /**
      * This function moves an active punishment to the expired table.
      */
-    public void expirePunishment(final @NotNull Punishment punishment) {
+    public void expirePunishment(final @NotNull Punishment punishment, final @NotNull PunshmentExpirationReasons reason) {
         Connection conn = createConnection();
         try {
             final PreparedStatement insertPunishment = conn.prepareStatement("INSERT INTO punishment_history (punishment_id, action, timestamp) VALUES (?, ?, ?);");
             insertPunishment.setString(1, punishment.getPlayerPunished().toString());
-            insertPunishment.setString(2, "EXPIRED");
+            insertPunishment.setString(2, reason.toString());
             insertPunishment.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
             insertPunishment.execute();
 
@@ -509,6 +510,31 @@ public class DatabaseHandler {
         Date expiry = rs.getDate("expiry_date");
         String reason = rs.getString("reason");
         return new Punishment(type, player, punisher, origin, expiry, reason);
+    }
+
+    /**
+     * This function retrieves every punishment stored in the active punishments table which were executed
+     * by a player.
+     * @param player player to find punishments for
+     * @return List of punishments
+     */
+    public List<Punishment> getPunishmentsExecutedByStaffMember(final Player player) {
+        Connection conn = createConnection(); // Connect to database
+        List<Punishment> punishments = new ArrayList<>(); // Create empty list of punishments
+        try {
+            final PreparedStatement query = conn.prepareStatement("SELECT * FROM active_punishments WHERE punisher_id = ?;"); // Create query
+            query.setString(1, player.getUniqueId().toString()); // Set UUID to find UUID of player
+            final ResultSet rs = query.executeQuery(); // Execute query
+            while (rs.next()) { // While there are results to query
+                punishments.add(createPunishmentFromResultSet(rs)); // Add punishment to list
+            }
+            rs.close(); // Close result set
+            conn.close(); // Close database connection
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while querying the database. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
+        return punishments; // Send back list
     }
 }
 
