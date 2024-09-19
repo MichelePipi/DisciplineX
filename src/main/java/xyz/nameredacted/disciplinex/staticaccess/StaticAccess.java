@@ -33,4 +33,16 @@ public class StaticAccess {
 
     // PUNISHMENT MESSAGES
     public static final TextComponent PLAYER_IS_MUTED = PLUGIN_PREFIX.append(Component.text("You are muted and cannot send messages.").color(NamedTextColor.WHITE));
+    public static final TextComponent WARNED_PLAYER = PLUGIN_PREFIX.append(Component.text("You have warned ").color(NamedTextColor.WHITE));
+    public static final TextComponent PLAYER_WARNED = PLUGIN_PREFIX.append(Component.text("You have been warned by ").color(NamedTextColor.WHITE));
+    public static final TextComponent KICKED_PLAYER = PLUGIN_PREFIX.append(Component.text("You have been kicked by ").color(NamedTextColor.WHITE));
+    public static final TextComponent PLAYER_KICKED = PLUGIN_PREFIX.append(Component.text("You have been kicked by ").color(NamedTextColor.WHITE));
+    public static final TextComponent MUTED_PLAYER = PLUGIN_PREFIX.append(Component.text("You have been muted by ").color(NamedTextColor.WHITE));
+    public static final TextComponent PLAYER_MUTED = PLUGIN_PREFIX.append(Component.text("You have been muted by ").color(NamedTextColor.WHITE));
+    public static final TextComponent UNMUTED_PLAYER = PLUGIN_PREFIX.append(Component.text("You have been unmuted by ").color(NamedTextColor.WHITE));
+    public static final TextComponent PLAYER_UNMUTED = PLUGIN_PREFIX.append(Component.text("You have been unmuted by ").color(NamedTextColor.WHITE));
+    public static final TextComponent BANNED_PLAYER = PLUGIN_PREFIX.append(Component.text("You have been banned by ").color(NamedTextColor.WHITE));
+    public static final TextComponent PLAYER_BANNED = PLUGIN_PREFIX.append(Component.text("You have been banned by ").color(NamedTextColor.WHITE));
+    public static final TextComponent UNBANNED_PLAYER = PLUGIN_PREFIX.append(Component.text("You have been unbanned by ").color(NamedTextColor.WHITE));
+    public static final TextComponent PLAYER_UNBANNED = PLUGIN_PREFIX.append(Component.text("You have been unbanned by ").color(NamedTextColor.WHITE));
 }

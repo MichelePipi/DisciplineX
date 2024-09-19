@@ -32,6 +32,7 @@ public final class DisciplineX extends JavaPlugin {
         log = getLogger();
         setInstance(this);
         importCommands();
+        importEvents();
         saveDefaultConfig(); // Save new config file, if it does not exist.
         info("Attempting to connect to database...");
         db = new DatabaseHandler();

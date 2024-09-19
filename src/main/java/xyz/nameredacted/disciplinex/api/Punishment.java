@@ -51,8 +51,8 @@ public class Punishment {
      *
      * @return UUID
      */
-    public String getPlayerPunished() {
-        return playerPunished.toString();
+    public UUID getPlayerPunished() {
+        return playerPunished;
     }
 
     /**
@@ -85,5 +85,14 @@ public class Punishment {
 
     public String getReason() {
         return reason;
+    }
+
+    /**
+     * Checks whether the punishment is currently active.
+     * Null = permanent
+     * @return true if active, false otherwise.
+     */
+    public boolean isActive() {
+        return expiry == null || expiry.after(new Date());
     }
 }

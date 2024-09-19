@@ -1,20 +1,24 @@
 name: DisciplineX
 version: '1.0-SNAPSHOT'
 main: xyz.nameredacted.disciplinex.DisciplineX
-author: 928533G
-api-version: '1.21'
+author: 'nameredacted'
+api-version: '1.21' # This plugin is built for Minecraft version 1.21 and will only support 1.21.
 
 commands:
   kick:
-    description: Kick a player
+    description: Kick a player.
 #    permission: disciplinex.moderation.ban
   ban:
     description: Ban a player for an infinite or finite amount of time.
 #    permission: disciplinex.moderation.ban
   mute:
+    description: Mute a player for an infinite or finite amount of time.
 #    permission: disciplinex.moderation.mute
   warn:
+    description: Warn a player.
 #    permission: disciplinex.moderation.warn
   refreshdatabase:
-    permission: disciplinex.admin.refreshdatabase
+#    permission: disciplinex.admin.refreshdatabase
     description: Refresh the database with the latest credentials.
+  blame:
+    description: Finds every punishment a player has sent.

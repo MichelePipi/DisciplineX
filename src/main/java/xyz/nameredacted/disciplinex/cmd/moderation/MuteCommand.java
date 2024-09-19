@@ -30,8 +30,21 @@ import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.*;
  */
 public class MuteCommand extends Command {
 
+    /**
+     * This list contains all the players that are currently muted.
+     * <p>
+     *     This list is used to check whether a player is muted or not.
+     *     If the player is muted, they will not be able to send messages.
+     *     This list is populated by the {@code DatabaseHandler} class.
+     *     </p>
+     */
     private ArrayList<Player> onlineMutedPlayers = new ArrayList<>();
 
+    /**
+     * This method checks whether the player has the permission to run the command.
+     * @param sender who ran the command
+     * @return true if the player has permission, false otherwise
+     */
     @Override
     protected boolean hasPermission(CommandSender sender) {
         return PermissionChecks.hasPermission(sender, "disciplinex.moderation.mute");
