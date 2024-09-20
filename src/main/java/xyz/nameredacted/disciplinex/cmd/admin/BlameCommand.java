@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import xyz.nameredacted.disciplinex.DisciplineX;
@@ -19,6 +18,10 @@ import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.PLUGIN_PREF
 /**
  * This command is used to find every punishment
  * a staff member has executed.
+ *
+ * TODO: Add tab completion for second argument {all, mute, warn, kick, ban}
+ * TODO: Allow for the second argument to be optional
+ * TODO: Allow for a second argument which allows for filtering by punishment type
  * @see Command
  */
 public class BlameCommand extends Command {
@@ -67,7 +70,7 @@ public class BlameCommand extends Command {
 
     @Override
     protected TextComponent getUsageMessage() {
-        return PLAYER_PREFIX.append(Component.text("Usage: /blame <playername>").color(NamedTextColor.WHITE));
+        return PLUGIN_PREFIX.append(Component.text("Usage: /blame <playername>").color(NamedTextColor.WHITE));
     }
 
 }

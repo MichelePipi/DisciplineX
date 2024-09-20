@@ -4,11 +4,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
+import xyz.nameredacted.disciplinex.cmd.admin.BlameCommand;
 import xyz.nameredacted.disciplinex.cmd.admin.RefreshDatabaseCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.BanCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.KickCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.WarnCommand;
+import xyz.nameredacted.disciplinex.cmd.moderation.*;
 import xyz.nameredacted.disciplinex.event.AsyncPlayerChatEventHandler;
 import xyz.nameredacted.disciplinex.event.PlayerJoinEventHandler;
 
@@ -72,6 +70,8 @@ public final class DisciplineX extends JavaPlugin {
         getCommand("warn").setExecutor(new WarnCommand());
         getCommand("mute").setExecutor(new MuteCommand());
         getCommand("refreshdatabase").setExecutor(new RefreshDatabaseCommand());
+        getCommand("blame").setExecutor(new BlameCommand());
+        getCommand("unmute").setExecutor(new UnmuteCommand());
     }
 
     private void importEvents() {
