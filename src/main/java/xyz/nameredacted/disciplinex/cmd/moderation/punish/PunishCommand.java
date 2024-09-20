@@ -3,6 +3,7 @@ package xyz.nameredacted.disciplinex.cmd.moderation.punish;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -68,6 +69,14 @@ public class PunishCommand extends Command {
         - The player does not have the permission [disciplinex.moderation.warn, mute, ...]
         - The player ALREADY has one of the punishments. (You cannot ban someone twice!) Warn and kick is excluded from these as they can occur more than once.
          */
+        Player target = Bukkit.getPlayer(args[0]);
+        if (target == null) {
+            player.sendMessage(PLUGIN_PREFIX.append(Component.text("Player not found.").color(NamedTextColor.RED)));
+            return COMMAND_SUCCESS;
+        }
+        Inventory inv = createPunishmentSelectionGui(player, target);
+        player.openInventory(inv);
+        DisciplineX.getPlayerPunishMap().put(player, target);
 
         return COMMAND_SUCCESS;
     }
@@ -78,7 +87,7 @@ public class PunishCommand extends Command {
     }
 
     private Inventory createPunishmentSelectionGui(Player p, Player target) {
-        Inventory inv = p.getServer().createInventory(null, 36, "Punish " + target.getName());
+        Inventory inv = p.getServer().createInventory(null, 36, Component.text("Punish " + target.getName()));
         // Add items to the inventory
         inv.setItem(4, getSkullItem(target)); // Player's head
 

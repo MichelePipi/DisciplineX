@@ -1,5 +1,6 @@
 package xyz.nameredacted.disciplinex;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -8,9 +9,11 @@ import xyz.nameredacted.disciplinex.cmd.admin.BlameCommand;
 import xyz.nameredacted.disciplinex.cmd.admin.RefreshDatabaseCommand;
 import xyz.nameredacted.disciplinex.cmd.dev.CheckDbCommand;
 import xyz.nameredacted.disciplinex.cmd.moderation.*;
+import xyz.nameredacted.disciplinex.cmd.moderation.punish.PunishCommandEventHandler;
 import xyz.nameredacted.disciplinex.event.AsyncPlayerChatEventHandler;
 import xyz.nameredacted.disciplinex.event.PlayerJoinEventHandler;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +26,7 @@ public final class DisciplineX extends JavaPlugin {
     private static Logger log;
     private static DisciplineX instance;
     private DatabaseHandler db;
+    public static HashMap<Player, Player> playerPunishMap = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -81,6 +85,7 @@ public final class DisciplineX extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerJoinEventHandler(), this);
         pm.registerEvents(new AsyncPlayerChatEventHandler(), this);
+        pm.registerEvents(new PunishCommandEventHandler(), this);
     }
 
     public static void severeError(final @NotNull String msg) {
@@ -127,5 +132,9 @@ public final class DisciplineX extends JavaPlugin {
 
     public Object getFromConfig(final String key) {
         return getConfig().get(key);
+    }
+
+    public static HashMap<Player, Player> getPlayerPunishMap() {
+        return playerPunishMap;
     }
 }
