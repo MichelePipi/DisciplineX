@@ -60,4 +60,9 @@ public class UnmuteCommand extends Command {
     protected TextComponent getUsageMessage() {
         return PLUGIN_PREFIX.append(Component.text("Usage: /unmute <player>").color(NamedTextColor.WHITE));
     }
+
+    @Override
+    protected boolean requiresTargetPlayer() {
+        return true;
+    }
 }

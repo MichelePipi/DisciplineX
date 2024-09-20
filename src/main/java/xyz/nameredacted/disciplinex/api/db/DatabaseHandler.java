@@ -2,7 +2,9 @@ package xyz.nameredacted.disciplinex.api.db;
 
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
 import xyz.nameredacted.disciplinex.DisciplineX;
@@ -10,6 +12,8 @@ import xyz.nameredacted.disciplinex.api.Punishment;
 import xyz.nameredacted.disciplinex.api.PunishmentTypes;
 import xyz.nameredacted.disciplinex.api.PunshmentExpirationReasons;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -535,6 +539,83 @@ public class DatabaseHandler {
             DisciplineX.getInstance().shutdownPlugin();
         }
         return punishments; // Send back list
+    }
+
+    @TestOnly
+    @Blocking
+    /**
+     * This function sends the entire database (players, active_punishments, punishment_history) to the console/player.
+     */
+    public void checkDatabase(final @NotNull CommandSender sender) {
+        Connection conn = createConnection();
+        try {
+            final PreparedStatement queryPlayers = conn.prepareStatement("SELECT * FROM players;");
+            final ResultSet rsPlayers = queryPlayers.executeQuery();
+            sender.sendMessage("Players:");
+            while (rsPlayers.next()) {
+                sender.sendMessage("Player ID: " + rsPlayers.getInt("player_id") + " | UUID: " + rsPlayers.getString("uuid") + " | Name: " + rsPlayers.getString("name"));
+            }
+            rsPlayers.close();
+
+            final PreparedStatement queryActivePunishments = conn.prepareStatement("SELECT * FROM active_punishments;");
+            final ResultSet rsActivePunishments = queryActivePunishments.executeQuery();
+            sender.sendMessage("Active Punishments:");
+            while (rsActivePunishments.next()) {
+                sender.sendMessage("Punishment ID: " + rsActivePunishments.getInt("punishment_id") + " | Player ID: " + rsActivePunishments.getString("player_id") + " | Punisher ID: " + rsActivePunishments.getString("punisher_id") + " | Type: " + rsActivePunishments.getString("punishment_type") + " | Reason: " + rsActivePunishments.getString("reason") + " | Start Date: " + rsActivePunishments.getDate("start_date") + " | Expiry Date: " + rsActivePunishments.getDate("expiry_date"));
+            }
+            rsActivePunishments.close();
+
+            final PreparedStatement queryPunishmentHistory = conn.prepareStatement("SELECT * FROM punishment_history;");
+            final ResultSet rsPunishmentHistory = queryPunishmentHistory.executeQuery();
+            sender.sendMessage("Punishment History:");
+            while (rsPunishmentHistory.next()) {
+                sender.sendMessage("Punishment ID: " + rsPunishmentHistory.getInt("punishment_id") + " | Action: " + rsPunishmentHistory.getString("action") + " | Timestamp: " + rsPunishmentHistory.getDate("timestamp"));
+            }
+            rsPunishmentHistory.close();
+            conn.close();
+        } catch (SQLException e) {
+            DisciplineX.severeError("A severe error has encountered while querying the database. The plugin has been shut down.");
+            DisciplineX.getInstance().shutdownPlugin();
+        }
+    }
+
+    /**
+     * This function exports the database as a CSV file and saves it to the plugin's resources folder.
+     */
+    public void exportDatabase() {
+        try (Connection connection = createConnection()) {
+            String sql = "SELECT * FROM active_punishments";
+
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            FileWriter csvWriter = new FileWriter("./data.csv");
+
+            // Write the header (column names)
+            int columnCount = resultSet.getMetaData().getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                csvWriter.append(resultSet.getMetaData().getColumnName(i));
+                if (i < columnCount) csvWriter.append(",");
+            }
+            csvWriter.append("\n");
+
+            // Write the data
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    csvWriter.append(resultSet.getString(i));
+                    if (i < columnCount) csvWriter.append(",");
+                }
+                csvWriter.append("\n");
+            }
+
+            csvWriter.flush();
+            csvWriter.close();
+
+            System.out.println("CSV file was created successfully!");
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

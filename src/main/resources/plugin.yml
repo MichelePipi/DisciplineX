@@ -24,3 +24,5 @@ commands:
     description: Finds every punishment a player has sent.
   unmute:
     description: Unmutes a player.
+  checkdb:
+    description: Sends the user the database table.

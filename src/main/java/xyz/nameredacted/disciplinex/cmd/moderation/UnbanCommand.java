@@ -55,4 +55,9 @@ public class UnbanCommand extends Command {
     protected TextComponent getUsageMessage() {
         return PLUGIN_PREFIX.append(Component.text("Usage: /unban <player>").color(NamedTextColor.WHITE));
     }
+
+    @Override
+    protected boolean requiresTargetPlayer() {
+        return true;
+    }
 }

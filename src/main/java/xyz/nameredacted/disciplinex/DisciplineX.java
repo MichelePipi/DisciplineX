@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
 import xyz.nameredacted.disciplinex.cmd.admin.BlameCommand;
 import xyz.nameredacted.disciplinex.cmd.admin.RefreshDatabaseCommand;
+import xyz.nameredacted.disciplinex.cmd.dev.CheckDbCommand;
 import xyz.nameredacted.disciplinex.cmd.moderation.*;
 import xyz.nameredacted.disciplinex.event.AsyncPlayerChatEventHandler;
 import xyz.nameredacted.disciplinex.event.PlayerJoinEventHandler;
@@ -72,6 +73,8 @@ public final class DisciplineX extends JavaPlugin {
         getCommand("refreshdatabase").setExecutor(new RefreshDatabaseCommand());
         getCommand("blame").setExecutor(new BlameCommand());
         getCommand("unmute").setExecutor(new UnmuteCommand());
+        getCommand("unban").setExecutor(new UnbanCommand());
+        getCommand("checkdb").setExecutor(new CheckDbCommand());
     }
 
     private void importEvents() {
