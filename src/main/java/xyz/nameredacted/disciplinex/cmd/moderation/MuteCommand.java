@@ -2,6 +2,7 @@ package xyz.nameredacted.disciplinex.cmd.moderation;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,8 +31,21 @@ import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.*;
  */
 public class MuteCommand extends Command {
 
+    /**
+     * This list contains all the players that are currently muted.
+     * <p>
+     *     This list is used to check whether a player is muted or not.
+     *     If the player is muted, they will not be able to send messages.
+     *     This list is populated by the {@code DatabaseHandler} class.
+     *     </p>
+     */
     private ArrayList<Player> onlineMutedPlayers = new ArrayList<>();
 
+    /**
+     * This method checks whether the player has the permission to run the command.
+     * @param sender who ran the command
+     * @return true if the player has permission, false otherwise
+     */
     @Override
     protected boolean hasPermission(CommandSender sender) {
         return PermissionChecks.hasPermission(sender, "disciplinex.moderation.mute");
@@ -62,6 +76,11 @@ public class MuteCommand extends Command {
         }
 
         mute(sender, targetPlayer);
+        sender.sendMessage(StaticAccess.PLAYER_MUTED.append(Component.text(targetPlayer.getName()).color(NamedTextColor.RED)));
+        // Send PLAYER_MUTED to target player, with the reason appended on the end.
+        String reason = "No reason provided.";
+        targetPlayer.sendMessage(StaticAccess.PLAYER_MUTED.append(Component.text(sender.getName()).color(NamedTextColor.RED)).append(Component.text(" for: " + reason).color(NamedTextColor.WHITE)));
+
 
         return StaticAccess.COMMAND_SUCCESS;
     }

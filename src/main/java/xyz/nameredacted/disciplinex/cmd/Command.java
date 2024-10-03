@@ -21,7 +21,6 @@ import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.*;
  */
 public abstract class Command implements CommandExecutor {
 
-
     /**
      * This abstract method is used to handle the command logic.
      * As previously mentioned in the Javadocs, this method encapsulates
@@ -48,16 +47,16 @@ public abstract class Command implements CommandExecutor {
 
         // Check if player does not have the required permission
         if (!hasPermission(player)) {
-            player.sendMessage(PERMISSION_ERROR);
-            // Play a low pitched cat growl sound, as a warning to the player. Make it random, but always at least low pitched.
+            player.sendMessage(PERMISSION_ERROR); // Error message
+            // Play a low pitched cat growl sound, as a warning to the player.
             player.playSound(player.getLocation(), "minecraft:entity.cat.hiss", 1.0f, 0.5f);
-            return COMMAND_FAILED;
+            return COMMAND_FAILED; // Command has failed.
         }
 
         // Check if the arguments are invalid
-        if (!areArgsValid(args)) {
-            player.sendMessage(getUsageMessage());
-            return COMMAND_FAILED; // Cancel command
+        if (!areArgsValid(args)) { // return true by default unless command implementation overrides
+            player.sendMessage(getUsageMessage()); // Send correct usage message
+            return COMMAND_FAILED; // Return false.
         }
 
         // Only check whether the target is a player if the command requires it
@@ -67,6 +66,8 @@ public abstract class Command implements CommandExecutor {
             return COMMAND_FAILED;
         }
 
+        // Play a success noise to the player.
+        player.playSound(player.getLocation(), "entity.experience_orb.pickup", 1.0f, 1.0f);
         // Call the abstract method to handle the specific command logic
         return execute(player, args);
     }
@@ -144,6 +145,11 @@ public abstract class Command implements CommandExecutor {
         return false;
     }
 
+    /**
+     * This method is used to get the player from the server based on a string (most commonly command arguments)
+     * @param str the string to convert to a player
+     * @return the player if found, null otherwise
+     */
     private Player getPlayer(final @NotNull String str) {
         return Bukkit.getPlayer(str);
     }

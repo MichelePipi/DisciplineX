@@ -23,9 +23,23 @@ public class Punishment {
     private Date origin;
     private Date expiry;
     private String reason;
+    private int id;
 
     // Prevent unnecessary initialisation
     private Punishment() {}
+
+    public Punishment(@NotNull PunishmentTypes punishmentType, @NotNull UUID playerPunished,
+                      @NotNull UUID blame, @NotNull Date origin,
+                      @Nullable Date expiry, @Nullable String reason,
+                      @NotNull int id) {
+        this.id = id;
+        this.punishmentType = punishmentType;
+        this.playerPunished = playerPunished;
+        this.blame = blame;
+        this.origin = origin;
+        this.expiry = expiry;
+        this.reason = reason;
+    }
 
     public Punishment(@NotNull PunishmentTypes punishmentType, @NotNull UUID playerPunished,
                       @NotNull UUID blame, @NotNull Date origin,
@@ -51,8 +65,8 @@ public class Punishment {
      *
      * @return UUID
      */
-    public String getPlayerPunished() {
-        return playerPunished.toString();
+    public UUID getPlayerPunished() {
+        return playerPunished;
     }
 
     /**
@@ -85,5 +99,22 @@ public class Punishment {
 
     public String getReason() {
         return reason;
+    }
+
+    /**
+     * This function returns the ID of the punishment.
+     * @return int
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Checks whether the punishment is currently active.
+     * Null = permanent
+     * @return true if active, false otherwise.
+     */
+    public boolean isActive() {
+        return expiry == null || expiry.after(new Date());
     }
 }

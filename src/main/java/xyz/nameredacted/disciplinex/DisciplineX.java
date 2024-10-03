@@ -1,17 +1,19 @@
 package xyz.nameredacted.disciplinex;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import xyz.nameredacted.disciplinex.api.db.DatabaseHandler;
+import xyz.nameredacted.disciplinex.cmd.admin.BlameCommand;
 import xyz.nameredacted.disciplinex.cmd.admin.RefreshDatabaseCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.BanCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.KickCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.MuteCommand;
-import xyz.nameredacted.disciplinex.cmd.moderation.WarnCommand;
+import xyz.nameredacted.disciplinex.cmd.dev.CheckDbCommand;
+import xyz.nameredacted.disciplinex.cmd.moderation.*;
+import xyz.nameredacted.disciplinex.cmd.moderation.punish.PunishCommandEventHandler;
 import xyz.nameredacted.disciplinex.event.AsyncPlayerChatEventHandler;
 import xyz.nameredacted.disciplinex.event.PlayerJoinEventHandler;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 /**
@@ -24,6 +26,7 @@ public final class DisciplineX extends JavaPlugin {
     private static Logger log;
     private static DisciplineX instance;
     private DatabaseHandler db;
+    public static HashMap<Player, Player> playerPunishMap = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -32,6 +35,7 @@ public final class DisciplineX extends JavaPlugin {
         log = getLogger();
         setInstance(this);
         importCommands();
+        importEvents();
         saveDefaultConfig(); // Save new config file, if it does not exist.
         info("Attempting to connect to database...");
         db = new DatabaseHandler();
@@ -71,12 +75,17 @@ public final class DisciplineX extends JavaPlugin {
         getCommand("warn").setExecutor(new WarnCommand());
         getCommand("mute").setExecutor(new MuteCommand());
         getCommand("refreshdatabase").setExecutor(new RefreshDatabaseCommand());
+        getCommand("blame").setExecutor(new BlameCommand());
+        getCommand("unmute").setExecutor(new UnmuteCommand());
+        getCommand("unban").setExecutor(new UnbanCommand());
+        getCommand("checkdb").setExecutor(new CheckDbCommand());
     }
 
     private void importEvents() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerJoinEventHandler(), this);
         pm.registerEvents(new AsyncPlayerChatEventHandler(), this);
+        pm.registerEvents(new PunishCommandEventHandler(), this);
     }
 
     public static void severeError(final @NotNull String msg) {
@@ -123,5 +132,9 @@ public final class DisciplineX extends JavaPlugin {
 
     public Object getFromConfig(final String key) {
         return getConfig().get(key);
+    }
+
+    public static HashMap<Player, Player> getPlayerPunishMap() {
+        return playerPunishMap;
     }
 }

@@ -1,14 +1,14 @@
 package xyz.nameredacted.disciplinex.cmd.moderation;
 
 import net.kyori.adventure.text.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.COMMAND_FAILED;
-import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.PLAYERS_ONLY_MSG;
+import static xyz.nameredacted.disciplinex.staticaccess.StaticAccess.*;
 
 public class WarnCommand extends xyz.nameredacted.disciplinex.cmd.Command {
     @ApiStatus.Obsolete
@@ -27,17 +27,29 @@ public class WarnCommand extends xyz.nameredacted.disciplinex.cmd.Command {
 
     @Override
     protected boolean hasPermission(CommandSender sender) {
-        return false;
+        return sender.hasPermission("disciplinex.moderation.warn");
     }
 
     @Override
     protected boolean areArgsValid(String[] args) {
-        return false;
+        return args.length >= 1;
     }
 
     @Override
     protected boolean execute(Player player, String[] args) {
-        return false;
+        Player target = Bukkit.getPlayer(args[0]);
+
+        // Warn player
+        if (args.length == 1) { // We know the target is not null, and that no reason was given.
+            target.sendMessage(WARNED_PLAYER);
+            player.sendMessage(WARNED_PLAYER);
+        } else {
+            target.sendMessage(WARNED_PLAYER + " Reason: " + args[1]);
+            player.sendMessage(WARNED_PLAYER + " Reason: " + args[1]);
+
+        }
+
+        return COMMAND_SUCCESS;
     }
 
     @Override

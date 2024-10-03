@@ -15,3 +15,6 @@ Please also note the following:
 5. Open the `config.yml` file in the `plugins/DisciplineX` folder.
 6. Fill in the database credentials.
 7. The plugin should now be installed and ready to use.
+
+# How to Use
+This plugin has  a variety of commands at the 
