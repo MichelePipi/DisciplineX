@@ -440,7 +440,7 @@ public class DatabaseHandler {
         Connection conn = createConnection();
         try {
             final PreparedStatement insertPunishment = conn.prepareStatement("INSERT INTO punishment_history (punishment_id, action, timestamp) VALUES (?, ?, ?);");
-            insertPunishment.setString(1, punishment.getPlayerPunished().toString());
+            insertPunishment.setString(1, String.valueOf(punishment.getId()));
             insertPunishment.setString(2, reason.toString());
             insertPunishment.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
             insertPunishment.execute();
@@ -509,12 +509,13 @@ public class DatabaseHandler {
      */
     private Punishment createPunishmentFromResultSet(final ResultSet rs) throws SQLException {
         PunishmentTypes type = PunishmentTypes.valueOf(rs.getString("punishment_type"));
+        int id = rs.getInt("punishment_id");
         UUID player = UUID.fromString(rs.getString("player_id"));
         UUID punisher = UUID.fromString(rs.getString("punisher_id"));
         Date origin = rs.getDate("start_date");
         Date expiry = rs.getDate("expiry_date");
         String reason = rs.getString("reason");
-        return new Punishment(type, player, punisher, origin, expiry, reason);
+        return new Punishment(type, player, punisher, origin, expiry, reason, id);
     }
 
     /**
