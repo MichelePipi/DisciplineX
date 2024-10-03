@@ -192,7 +192,7 @@ public class DatabaseHandler {
             final PreparedStatement createTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS punishment_history (" +
                     "punishment_id INT, " +
                     "FOREIGN KEY (punishment_id) REFERENCES active_punishments(punishment_id)," +
-                    "action ENUM('CREATED', 'EXPIRED', 'LIFTED') NOT NULL," +
+                    "action ENUM('NO_EXPIRY', 'EXPIRED', 'MANUALLY_LIFTED') NOT NULL," +
                     "timestamp DATETIME NOT NULL);");
             createTable.execute();
             /**
