@@ -31,7 +31,7 @@ public class HashUtils {
         long availableMemory = Runtime.getRuntime().freeMemory();
         long thread = Thread.currentThread().getId();
 
-        return new String(time + "-" + availableMemory + "-" + thread).getBytes();
+        return (time + "-" + availableMemory + "-" + thread).getBytes();
     }
 
     /**

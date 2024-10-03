@@ -22,3 +22,9 @@ commands:
     description: Refresh the database with the latest credentials.
   blame:
     description: Finds every punishment a player has sent.
+  unmute:
+    description: Unmutes a player.
+  checkdb:
+    description: Sends the user the database table.
+  unban:
+    description: Unbans a player.

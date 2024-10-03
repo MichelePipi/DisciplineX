@@ -26,3 +26,5 @@ commands:
     description: Unmutes a player.
   checkdb:
     description: Sends the user the database table.
+  unban:
+    description: Unbans a player.

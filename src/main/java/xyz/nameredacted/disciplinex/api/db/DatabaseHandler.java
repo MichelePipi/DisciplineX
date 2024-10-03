@@ -456,6 +456,7 @@ public class DatabaseHandler {
             deletePunishment.execute();
         } catch (SQLException e) {
             DisciplineX.severeError("A severe error has encountered while inserting a punishment into the database. The plugin has been shut down.");
+            e.printStackTrace();
             DisciplineX.getInstance().shutdownPlugin();
         }
     }
