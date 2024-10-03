@@ -616,7 +616,7 @@ public class DatabaseHandler {
             System.out.println("CSV file was created successfully!");
 
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            DisciplineX.severeError(e.toString());
         }
     }
 }
