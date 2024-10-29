@@ -17,4 +17,14 @@ Please also note the following:
 7. The plugin should now be installed and ready to use.
 
 # How to Use
-This plugin has  a variety of commands at the 
+This plugin has  a variety of commands at the user's disposal. The following commands are:
+
+- /unban
+- /unmute
+- /warn
+- /kick
+- /ban
+- /blame
+- /refreshdatabase
+- /checkdb
+- /punish
